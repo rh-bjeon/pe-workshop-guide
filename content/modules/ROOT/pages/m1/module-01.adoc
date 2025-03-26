@@ -33,27 +33,16 @@ Parasol은 보험 회사이지만, 소매업 등 다양한 분야로 빠르게 �
 
 == Hello Workshop!
 
-In this workshop, you will walk through in the steps of the platform engineers
-
-* discover what this Internal Developer Platform (IDP) is all about
-* how to design, architect and roll out a TVP (Thinnest Viable Product)
-* gain feedback from developers through a test-drive
-* onboard existing applications for a single-pane-of-glass approach
-* setup workflows - from laptop to Production
-* and a touch of Security as well
-
-All of this boiling down to _how to setup Development Teams up for success in a cloud native, AI infused world_!
-
 이 워크숍에서는 플랫폼 엔지니어의 작업 과정을 따라가며 다음 내용을 학습합니다.
 
 * 내부 개발자 플랫폼(IDP)이 무엇인지 발견하기
 * TVP(최소 실행 가능 제품, Thinnest Viable Product)의 설계, 아키텍처 구성 및 롤아웃 방법
 * 테스트 드라이브를 통해 개발자로부터 피드백 받기
 * 단일 화면 인터페이스(single-pane-of-glass)에서 기존 애플리케이션 온보딩하기
-#모듈6 * 노트북에서 프로덕션까지의 워크플로우 설정하기
-#모듈7 * 보안 요소도 함께 고려하기
+* 노트북에서 프로덕션까지의 워크플로우 설정하기
+* 보안 요소도 함께 고려하기
 
-현재 이 워크샵은 개발 중으로, 티켓 승인 과정 및 보안 요소 결합 등의 과정이 추가될 예정입니다. 
-궁극적으로, _클라우드 네이티브 및 AI가 접목된 세계에서 개발 팀을 성공적으로 운영하는 방법_ 을 배우게 됩니다!
+현재 이 워크샵은 개발 중으로, 워크플로우 설정 및 보안 요소 결합 등의 과정이 추가될 예정입니다. 
+궁극적으로, __클라우드 네이티브 및 AI가 접목된 세계에서 개발 팀을 성공적으로 운영하는 방법__을 배우게 됩니다!
 
 == Conclusion

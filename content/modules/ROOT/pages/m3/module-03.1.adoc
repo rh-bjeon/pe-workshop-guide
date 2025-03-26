@@ -4,8 +4,6 @@
 
 include::../style.adoc[]
 
-As mentioned earlier, Templates are defined using YAML and rendered as a rich form in the {product_name_rhdh} UI when used by development teams.
-
 앞서 언급했듯이 템플릿은 YAML 형식으로 정의되며, 개발팀이 사용할 때 {product_name_rhdh} UI에서 리치 폼(Rich Form)으로 렌더링됩니다.
 
 GitLab의 https://gitlab-gitlab.{openshift_cluster_ingress_domain}/rhdh/template-quarkus-simple[rhdh/template-quarkus-simple^, window="gitlab"] 저장소에 있는 샘플 템플릿을 통해 구조를 살펴보겠습니다. 
@@ -78,8 +76,6 @@ JSON Schema를 사용하면 템플릿이 지원하는 매개변수를 정의할 
 `react-jsonschema-form`은 JSON Schema를 기반으로 웹 폼을 생성하는 React 컴포넌트 라이브러리로, 스캐폴더(Scaffolder) 플러그인의 핵심 프런트엔드 기능을 담당합니다. 이러한 React 구성 요소는 개발자와 최종 사용자가 소프트웨어 템플릿을 활용하는 데 필요한 데이터를 입력할 수 있도록 폼을 렌더링하는 역할을 합니다.
 ====
 
-The properties that have a `ui` prefix might have piqued your interest. These are special properties that provide instructions to the form, for example, to enable autocomplete or autofocus certain form fields when it is displayed in the {product_name_rhdh} UI.
-
 `ui` 접두어가 붙은 속성들이 눈에 띄었을 수 있습니다. `ui:*` 속성들은 {product_name_rhdh} UI에 표시될 때 자동완성 또는 특정 양식 필드에 자동 포커스를 활성화하는 등 폼의 동작을 사용자 친화적으로 조정하는 데 사용됩니다. 
 
 === Steps
@@ -112,13 +108,6 @@ spec:
 ```
 
 === Output
-
-The _spec.output_ makes use the variables that individual steps output to do display useful information such a 
-
-* links to newly created Components
-* Source Code Repository links
-* links to Git Merge Requests that are needed etc
-* markdown text blobs
 
 __spec.output__은 개별 단계가 출력하는 변수를 사용하여 다음과 같은 유용한 정보를 표시합니다. 
 
