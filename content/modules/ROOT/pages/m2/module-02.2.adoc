@@ -1,27 +1,27 @@
 :imagesdir: ../../assets/images
 
-== Activity: Access {product_name_rhdh}
+== 활동: {product_name_rhdh}에 접속
 
 include::../style.adoc[]
 
-{product_name_rhdh} has been pre-deployed with a base configuration in your workshop environment. You can find and access your instance in the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/backstage[backstage project on OpenShift^, window="console"].
+{product_name_rhdh}는 워크숍 환경에 기본 구성으로 사전 배포되어 있습니다. https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/backstage[OpenShift^의 backstage 프로젝트, window="console"]에서 인스턴스를 찾아 액세스할 수 있습니다.
 
-Login to {product_name_rhdh}:
+아래 과정을 통해 {product_name_rhdh}에 로그인하세요.
 
-. Visit the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/backstage?view=graph[backstage project^, window="console"] in your OpenShift cluster. You can login as *admin/{common_password}*
-. Select the *backstage-developer-hub* Deployment in the Topology View.
+. OpenShift 클러스터에서 https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/backstage?view=graph[backstage project^, window="console"]로 들어가세요. *admin/{common_password}*로 로그인할 수 있습니다.
+. 토폴로지 보기(Topology View)에서 *backstage-developer-hub* Deployment를 선택합니다.
 +
 image::m2/openshift-backstage-deployment.png[{product_name_rhdh} deployment on OpenShift]
-. Click the URL listed under the *Resources* tab; it will be similar to https://backstage-backstage.{openshift_cluster_ingress_domain}[https://backstage-backstage.{openshift_cluster_ingress_domain}^, window="rhdh"]
+. *리소스(Resources)* 탭 아래에 나열된 URL을 클릭합니다. https://backstage-backstage.{openshift_cluster_ingress_domain}[https://backstage-backstage.{openshift_cluster_ingress_domain}^, window="rhdh"]와 유사합니다. 
 
-The sign-in page will be displayed, with the option to login as a Guest. Click the *Enter* button to use the Guest sign-in.
+로그인 페이지가 표시되며, Guest로 로그인할 수 있는 옵션이 제공됩니다. *Enter* 버튼을 클릭하여 게스트 로그인 방식을 사용하세요.
 
-NOTE: Ignore the GitHub sign-in method if it's displayed. It is not configured and will not work. 
+NOTE: 만약 GitHub 로그인 방법이 표시되면 무시하세요. 이는 구성되지 않았으며 작동하지 않습니다.
 
 image:m2/backstage-guest-signin.png[{product_name_rhdh} deployment on OpenShift, width=60%]
 
-WARNING: The Guest sign-in option is currently enabled, but you'll configure a production-ready sign-in option based on OpenID Connect shortly. The Guest sign-in option is only meant for development and testing purposes.
+WARNING: 현재 게스트 로그인 옵션이 활성화되어 있지만, 곧 OpenID Connect를 기반으로 한 프로덕션에 적합한 로그인 옵션을 구성할 예정입니다. 게스트 로그인 옵션은 개발 및 테스트 목적으로만 사용됩니다.
 
-Visit the *Catalog* using the link in the menu on the left-hand side of the {product_name_rhdh} UI. You'll find that it's empty, and that the *Kind* dropdown doesn't provide any options - let's fix that!
+{product_name_rhdh} UI의 왼쪽 메뉴에서 *Catalog* 링크를 클릭하여 방문하세요. 해당 페이지는 비어 있을 것이며, *Kind* 드롭다운에 아무런 옵션도 없을 것입니다. 이것을 수정해 보겠습니다! 
 
 image:m2/rhdh-empty-catalog.png[Empty {product_name_rhdh} Catalog]

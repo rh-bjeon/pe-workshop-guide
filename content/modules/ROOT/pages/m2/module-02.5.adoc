@@ -2,46 +2,46 @@
 
 :sso-link: https://sso.{openshift_cluster_ingress_domain}/admin/master/console/#/backstage
 
-== Activity: Configure OpenID Connect Authentication
+== Activity: 활동: OpenID Connect 인증 구성
 
 include::../style.adoc[]
 
-{product_name_rhdh} supports four authentication providers:
+{product_name_rhdh}는 4가지 인증 공급자를 지원합니다.
 
-* Guest (suitable for experimentation and demos only)
+* Guest (실험 및 데모에만 적합)
 * OpenID Connect
 * GitHub
 * Microsoft Azure
 
-In this activity you'll configure an OpenID Connect authentication provider - this will enable developers within your organization to login using their single sign-on (SSO) credentials.
+이 활동에서는 OpenID Connect 기반 인증 공급자를 구성합니다. 이를 통해 조직 내 개발자는 SSO(Single Sign-On) 자격 증명을 사용하여 로그인할 수 있습니다.
 
-=== High-Level Workflow
+=== 하이레벨 워크플로우
 
-A complete set of documentation for configuring OpenID Connect authentication using https://access.redhat.com/products/red-hat-single-sign-on[Red Hat Single Sign-On^, window="content"] is available in the https://docs.redhat.com/en/documentation/red_hat_developer_hub/1.3/html-single/authentication/index#enabling-authentication-with-rhsso[{product_name_rhdh} documentation^, window="content"]. 
+https://access.redhat.com/products/red-hat-build-of-keycloak[Red Hat build of Keycloak^, window="content"]을 사용하여 OpenID Connect 인증을 구성하는 방법은 https://docs.redhat.com/en/documentation/red_hat_developer_hub/1.3/html-single/authentication/index#enabling-authentication-with-rhsso[{product_name_rhdh} 문서^, window="content"]에서 확인할 수 있습니다.
 
-NOTE: Don't worry if some of the following bullet points are hard to understand upon first reading them. You'll be guided through each piece step-by-step.
+NOTE: 아래의 항목들을 처음 읽었을 때 이해하기 어려울 수도 있습니다. 각 단계를 차근차근 안내해 드릴 예정이니 걱정하지 마세요.
 
-The high-level steps involve:
+인증 통합 과정은 크게 다음과 같은 단계로 나눌 수 있습니다.
 
-. Creating a Realm and Client in Red Hat Single Sign-On. These have been pre-configured for you. View the `backstage` Realm using the following URL and credentials:
+. Red Hat build of Keycloak에서 Realm과 클라이언트를 생성하는 작업입니다. 이들은 이미 사전 구성되어 있습니다. `backstage` Realm을 다음 URL과 자격 증명으로 확인하세요:
     * *URL*: {sso-link}[Backstage Realm on Red Hat Single Sign-On^, window=sso]
-    * *Credentials*: https://console-openshift-console.{openshift_cluster_ingress_domain}/k8s/ns/keycloak/secrets/keycloak-initial-admin[View on OpenShift, window="content"]
-. Configuring the {product_name_rhdh} Keycloak plugin to synchronize users from Red Hat Single Sign-On to {product_name_rhdh}.
-. Configuring the `oidc` {product_name_rhdh} authentication provider with the Realm details.
-. Setting `oidc` as `signInPage` page type for {product_name_rhdh}.
-. Enabling session support in {product_name_rhdh}.
+    * *Credentials*: https://console-openshift-console.{openshift_cluster_ingress_domain}/k8s/ns/keycloak/secrets/keycloak-initial-admin[OpenShift에서 확인, window="content"]
+. Red Hat build of Keycloak에서 사용자를 {product_name_rhdh}로 동기화하기 위해 {product_name_rhdh} Keycloak 플러그인을 설정정합니다.
+. Realm 세부 정보를 사용하여 `oidc` {product_name_rhdh} 인증 제공자를 설정합니다.
+. {product_name_rhdh}의 signInPage 페이지 유형으로 `oidc`를 설정합니다.
+. {product_name_rhdh}에서 세션 지원(session support)을 활성화합니다.
 
-=== Configure the OpenID Connect Authentication Provider
+=== OpenID Connect 인증 공급자 구성
 
-. Visit your https://gitlab-gitlab.{openshift_cluster_ingress_domain}/rhdh/developer-hub-config/[rhdh/developer-hub-config repository on GitLab, window="gitlab"].
-. Open the *values.yaml* file, then select *Edit > Edit single file*.
-. Locate the `appConfig.auth` object in the YAML. You can search for `--- AUTHENTICATION ---` in this file to locate this section.
-. Delete the existing `auth` configuration that contains the `guest` provider.
-. Uncomment the entire `auth` configuration containing the `oidc` provider, and the `signInPage` setting below it.
+. https://gitlab-gitlab.{openshift_cluster_ingress_domain}/rhdh/developer-hub-config/[GitLab의 rhdh/developer-hub-config 저장소, window="gitlab"]을 방문하세요.
+. *values.yaml* 파일을 열고 *Edit > Edit single file*을 선택합니다.
+. YAML에서 `appConfig.auth` 객체를 찾습니다. 이 파일에서 `--- AUTHENTICATION ---` 을 검색하여 이 섹션을 찾을 수 있습니다.
+. `guest` 공급자를 포함하는 기존 `auth` 구성을 삭제합니다.
+. `oidc` 공급자와 그 아래의 `signInPage` 설정을 포함하는 전체 `auth` 구성의 주석 처리를 제거합니다.
 +
 image:m2/auth-section-original.png[appConfig.auth object in the YAML, width=80%]
 
-. The end result will look similar to:
+. 최종 결과는 다음과 유사합니다.
 +
 [source,yaml,subs=attributes+]
 ----
@@ -62,25 +62,25 @@ auth:
 signInPage: oidc
 ----
 
-. This is an example standard Backstage `auth` configuration. Below is a summary of what this configuration specifies:
-* Enable sessions, and use the `BACKEND_SECRET` environment variable to sign sessions.
-* Set the authentication `environment` to `production`. Environments can have any arbitrary name.
-* Enable the OpenID Connect provider (`providers.oidc`) with the following configuration:
-** Provide a `production` configuration (corresponding to the `environment` defined previously).
-** Use the `backstage` Realm (`metadataUrl`).
-** Load the `clientId` and `clientSecret` from environment variables (loaded from the precreated https://console-openshift-console.{openshift_cluster_ingress_domain}/k8s/ns/backstage/secrets/oauth-client[*oauth-client*] Secret, specified in `extraEnvVarsSecrets` in the _values.yaml_)
-** Map any signing in user identity to a User Entity in {product_name_rhdh} using the specified https://backstage.io/docs/auth/identity-resolver/[resolver^, window="console"]. These Users and Groups have already been synchronised to the catalog due to your work in the prior module.
-* The `signInPage` property is specific to {product_name_rhdh}. It ensures the correct sign-in UI is rendered. In upstream Backstage this requires React code changes.
+. 이것은 표준 Backstage `auth` 구성의 예시 중 하나 입니다. 이 구성이 지정하는 내용의 요약은 다음과 같습니다.
+* 세션을 활성화하고 `BACKEND_SECRET` 환경 변수를 사용하여 세션에 서명합니다. 
+* 인증의 `environment` 를 `production` 으로 설정합니다. environment는 임의의 이름을 가질 수 있습니다. 
+* 다음 구성으로 OpenID Connect 공급자(`providers.oidc`)를 활성화합니다. 
+** `production` environment의 구성을 제공합니다. (이전에 정의된 `environment` 에 해당하는 값)
+** `backstage` Realm(`metadataUrl`)을 사용합니다. 
+** 환경 변수에서 `clientId` 및 `clientSecret`을 로드합니다(사전 생성된 https://console-openshift-console.{openshift_cluster_ingress_domain}/k8s/ns/backstage/secrets/oauth-client[*oauth-client*] secret에서 로드되며 _values.yaml_ 의 `extraEnvVarsSecrets`에 지정됨) 
+** 지정된 https://backstage.io/docs/auth/identity-resolver/[resolver^, window="console"]를 사용하여 모든 로그인 사용자 ID를 {product_name_rhdh}의 User 엔터티에 매핑합니다. 이러한 사용자 및 그룹은 이전 모듈에서의 작업으로 인해 이미 카탈로그에 동기화되었습니다. 
+* `signInPage` 속성은 {product_name_rhdh}에만 해당합니다. 올바른 로그인 UI가 렌더링되도록 합니다. 업스트림 Backstage에서 이를 위해서는 React 코드를 변경해야 합니다.
 
-. Commit the changes with a message similar to `feat: enable openid connect`
-. Click Refresh on the https://openshift-gitops-server-openshift-gitops.{openshift_cluster_ingress_domain}/applications[`backstage` Application in OpenShift GitOps^, window="argo"]. If prompted, login as `admin/{openshift_gitops_password}`.
-. Wait until the Application reports being in a *Healthy* state.
+. `feat: enable openid connect`와 유사한 메시지로 변경 사항을 커밋합니다 
+. https://openshift-gitops-server-openshift-gitops.{openshift_cluster_ingress_domain}/applications[OpenShift GitOps의 `backstage` Application^, window="argo"]에서 Refresh 버튼을 클릭합니다. 로그인 창이 표시되면 `admin/{openshift_gitops_password}`로 로그인합니다.
+. 애플리케이션이 *Healthy* 상태라고 보고할 때까지 기다립니다. 
 
-=== Login using OpenID Connect Authentication
+=== OpenID Connect 인증을 사용하여 로그인
 
-. Once the latest version of your `appConfig` has been synchronized and rolled out, visit your https://backstage-backstage.{openshift_cluster_ingress_domain}/[{product_name_rhdh} instance^, window="rhdh"]. You will be prompted to sign-in using OpenID Connect.
+. `appConfig`의 최신 버전이 동기화되고 롤아웃되면 https://backstage-backstage.{openshift_cluster_ingress_domain}/[{product_name_rhdh} 인스턴스^, window="rhdh"]를 방문하세요. OpenID Connect를 사용하여 로그인하라는 메시지가 표시됩니다. 
 +
 image:m2/rhdh-oidc-login.png[OIDC Sign-In Prompt]
-. Login using the username `pe1` and password `{common_password}` in the popup that appears. After logging in, visit the *Settings* page in {product_name_rhdh} to confirm you're logged in as the `pe1` user.
+. 나타나는 팝업에서 사용자 이름 `pe1`과 비밀번호 `{common_password}`를 사용하여 로그인합니다. 로그인 후, {product_name_rhdh}의 *Settings* 페이지를 방문하여 `pe1` 사용자로 로그인했는지 확인합니다. 
 + 
 image:m2/rhdh-pe1-user.png[Viewing the user details on the Settings UI in {product_name_rhdh}]

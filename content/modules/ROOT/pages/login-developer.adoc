@@ -1,16 +1,16 @@
-*Login as Developer*
+*개발자로 로그인*
 
-* You will perform this activity as a Developer. 
-* Logout from https://backstage-backstage.{openshift_cluster_ingress_domain}[{product_name_rhdh}^, window="rhdh"]
-** Navigate to the *Settings* menu at the bottom right side of {product_name_rhdh} and click on the kebab menu in the *Profile* card
+* 이 활동은 개발자로서 수행합니다.
+* https://backstage-backstage.{openshift_cluster_ingress_domain}[{product_name_rhdh}^, window="rhdh"]에서 로그아웃합니다.
+** {product_name_rhdh}의 오른쪽 하단에 있는 *Settings* 메뉴로 이동하여 *Profile* 카드에서 햄버거 메뉴 버튼을 클릭합니다.
 +
 image::common/rhdh-settings.png[Settings of {product_name_rhdh}]
-** Sign out of {product_name_rhdh} from the Settings section as shown in the screenshot below.
+** 아래 스크린샷에 표시된 대로 설정 섹션에서 {product_name_rhdh}에서 로그아웃합니다.
 +
 image::common/rhdh-sign-out.png[Signing out of {product_name_rhdh}]
-* Logout from https://gitlab-gitlab.{openshift_cluster_ingress_domain}[GitLab^, window="gitlab"]
-** Click on the Profile icon, and Sign out from the dropdown as shown in the screenshot below.
+* https://gitlab-gitlab.{openshift_cluster_ingress_domain}[GitLab^, window="gitlab"]에서 로그아웃합니다.
+** 프로필 아이콘을 클릭하고 아래 스크린샷에 표시된 대로 드롭다운에서 로그아웃합니다.
 +
 image::common/gitlab-sign-out.png[Signing out of {product_name_rhdh}]
 
-* Login back as a *Developer* to to *{product_name_rhdh}* and *GitLab* using the credentials `dev1/{common_password}`
+* `dev1/{common_password}` 자격 증명을 사용하여 *{product_name_rhdh}* 및 **GitLab**에 **개발자**로 다시 로그인합니다.

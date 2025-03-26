@@ -1,45 +1,46 @@
 :imagesdir: ../../assets/images
 
-== Introduction to Concepts
+== 개념 소개
 
 include::../style.adoc[]
 
-{product_name_rhdh}, and internal developer portals in general, can be thought of as a modular system where you aggregate and display data related to the software within an organization.
+{product_name_rhdh} 및 일반적인 내부 개발자 플랫폼은 조직 내 소프트웨어와 관련된 데이터를 수집하고 표시하는 모듈형 시스템으로 볼 수 있습니다.
 
-The core features of {product_name_rhdh} are the:
+{product_name_rhdh}의 핵심 기능은 다음과 같습니다.
 
-* Software Catalog
-* Software Templates
-* TechDocs
-* Kubernetes Integration
+* 소프트웨어 카탈로그(Software Catalog)
+* 소프트웨어 템플릿(Software Templates)
+* 기술 문서(TechDocs)
+* Kubernetes 통합
 
-=== Software Templates
+=== 소프트웨어 템플릿
 
-Software Templates have been referred to as "Golden Paths" in the past. These templates are designed and curated by platform engineers to provide a starting point for new software components that adhere to best practices within an organization. Templates can also be used to patch and update existing source code repositories.
+소프트웨어 템플릿은 과거에 "Golden Paths"라고도 불렸습니다. 
+이러한 템플릿은 플랫폼 엔지니어가 설계하고 큐레이션하여 조직의 모범 사례를 따르는 새로운 소프트웨어 구성 요소에 대한 시작점을 제공합니다. 또한 기존 소스 코드 저장소를 패치하고 업데이트하는 데도 사용할 수 있습니다.
 
-We'll dive deeper into Software Templates in another module!
+소프트웨어 템플릿에 대한 자세한 내용은 이후 모듈에서 더 깊이 다룰 예정입니다!
 
-=== Software Catalog
+=== 소프트웨어 카탈로그
 
-The Software Catalog is a centralised asset tracker for all of the software in your organization. It stores and tracks *Entities*:
+소프트웨어 카탈로그는 조직 내 모든 소프트웨어를 중앙에서 관리하는 자산 추적 시스템입니다. 여기에는 다음과 같은 **엔터티(Entities)**가 저장 및 추적됩니다.
 
-* Components: Units of software, e.g. microservices, websites, libraries.
-* Resources: Databases, S3 buckets, brokers.
-* APIs: Represent interfaces such as REST, gRPC, and GraphQL APIs.
-* Systems: Collections of Components that make up an application or platform.
-* Domains: A higher-level grouping of Systems and Entities.
-* User: Individual users that are part of your organization.
-* Group: Groups of Users.
+* 컴포넌트(Components): 개별 소프트웨어 단위 (마이크로서비스, 웹사이트, 라이브러리 등)
+* 리소스(Resources): 데이터베이스, S3 버킷, 브로커 등 인프라 관련 자원
+* API: REST, gRPC, GraphQL API 등의 인터페이스
+* 시스템(Systems): 애플리케이션이나 플랫폼을 구성하는 여러 컴포넌트의 모음
+* 도메인(Domains): 시스템과 엔터티를 더 큰 범주로 그룹화한 개념
+* 사용자(User): 조직의 개별 사용자
+* 그룹(Group): 사용자의 그룹
 
-Entities are typically imported and synchronized in one of three ways:
+엔터티는 일반적으로 다음 세 가지 중 한 방식으로 가져와 동기화됩니다.
 
-. Using plugins that automatically find and import them.
-. Manually registering entities via the UI by providing a link to a repository containing them.
-. Declaring them in the Backstage configuration.
+. 자동으로 검색하고 가져오는 플러그인 사용
+. UI에서 엔티티를 포함하는 저장소에 대한 링크를 제공하여 수동으로 등록
+. Backstage 구성 파일에 선언
 
-In all cases, the Entities will be synchronized on a regular schedule to ensure the information in the Software Catalog remains up to date. You'll utilize all three methods throughout this workshop. 
+어떤 방법을 사용하든, 엔터티 정보는 정기적으로 동기화되어 소프트웨어 카탈로그가 최신 상태로 유지됩니다. 이번 워크샵에서는 위의 세 가지 방법을 모두 활용하게 됩니다.
 
-If Entity information is stored in a Git repository, the convention is to place them in a _catalog-info.yaml_. This file will look similar to the following example:
+Git 저장소에 엔터티 정보를 저장하는 경우, 일반적으로 _catalog-info.yaml_ 파일에 해당 정보를 기록합니다. 이 파일은 다음과 같은 형식을 가집니다.
 
 ```yaml
 apiVersion: backstage.io/v1alpha1
@@ -66,28 +67,31 @@ spec:
   owner: "pe1"
 ```
 
-Users and Groups can be specified as owners of other Entities. If this seems abstract, don't worry, you'll see it in definitive terms shortly. A well curated Software Catalog will enable your developers to find API documentation and teams that are responsible for the Components powering those APIs, for example.
+사용자와 그룹은 다른 엔터티(컴포넌트, 리소스, API 등)의 소유자로 지정할 수 있습니다. 이 개념이 추상적으로 느껴지더라도 걱정하지 마세요. 곧 명확한 예시를 통해 이해할 수 있습니다. 
+잘 정리된 소프트웨어 카탈로그를 사용하면 개발자가 API 문서와 해당 API를 지원하는 컴포넌트를 담당하는 팀을 쉽게 찾을 수 있게 해줍니다.
 
-=== Plugins
+=== 플러그인
 
-Backstage - and by extension {product_name_rhdh} - supports the concept of plugins. Utilizing plugins is a critical part of enabling the desired functionality for your IDP.
+Backstage와 그 확장인 {product_name_rhdh}는 플러그인 개념을 지원합니다. 플러그인을 활용하는 것은 IDP에서 원하는 기능을 구현하는 데 중요한 부분입니다.
 
-Currently, running an instance and adding plugins to upstream Backstage requires a platform engineer to:
+현재, 업스트림 Backstage에서 인스턴스를 실행하고 플러그인을 추가하려면 플랫폼 엔지니어가 다음과 같은 단계를 수행해야 합니다.
 
-. Create a Backstage project using Node.js and npm.
-. Install the plugin(s) from npm.
-. Edit the Backstage React and Node.js source code to load the plugin.
-. Build a container image and deploy it.
+. Node.js와 npm을 사용하여 Backstage 프로젝트 생성
+. npm에서 플러그인 설치
+. Backstage React 및 Node.js 소스 코드를 편집하여 플러그인 로드
+. 컨테이너 이미지를 빌드하고 배포
 
-The ability to load plugins dynamically is a value added feature included in {product_name_rhdh} that's currently unavailable in upstream Backstage - you can read more about it in the https://docs.redhat.com/en/documentation/red_hat_developer_hub/1.3/html/introduction_to_plugins/index#con-rhdh-plugins[{product_name_rhdh} documentation^, window="content"]. The dynamic plugin support in {product_name_rhdh} means that new plugins can be installed without the need to edit code and rebuild the {product_name_rhdh} container image.
+하지만 {product_name_rhdh}는 동적으로 플러그인을 로드할 수 있는 기능을 제공합니다. 
+이는 현재 업스트림 Backstage에서는 지원되지 않는 기능으로, 자세한 내용은 https://docs.redhat.com/en/documentation/red_hat_developer_hub/1.3/html/introduction_to_plugins/index#con-rhdh-plugins[{product_name_rhdh} documentation^, window="content"]에서 확인할 수 있습니다. 
+{product_name_rhdh}에서 동적 플러그인 지원은 코드 편집 및 {product_name_rhdh} 컨테이너 이미지 재빌드를 하지 않고도 새로운 플러그인을 설치할 수 있게 해줍니다.
 
-You'll see dynamic plugins in action shortly.
+동적 플러그인의 실제 동작도 곧 실습을 통해 확인할 수 있습니다.
 
-=== Understanding the {product_name_rhdh} Configuration
+=== {product_name_rhdh} 구성 이해
 
-Upstream Backstage uses an https://backstage.io/docs/conf/[app-config.yaml^, window="content"] file to define configuration values. {product_name_rhdh} is no different.
+업스트림 Backstage는 https://backstage.io/docs/conf/[app-config.yaml^, window="content"] 파일을 사용하여 구성 값을 정의합니다. {product_name_rhdh}도 마찬가지입니다.
 
-A simple Backstage configuration file looks similar to the following example:
+간단한 Backstage 구성 파일은 다음과 같은 형태를 띕니다.
 
 ```yaml
 # Define authentication configuration (this example is for testing only!)
@@ -115,8 +119,12 @@ techdocs:
     runIn: local
 ```
 
-Since you're using the {product_name_rhdh} Helm Chart to install and manage your internal developer portal, your configuration is nested under an `upstream.backstage.appConfig` property in a Helm Values file. View your configuration by visiting your https://gitlab-gitlab.{openshift_cluster_ingress_domain}/rhdh/developer-hub-config/-/blob/main/values.yaml[rhdh/developer-hub-config repository on GitLab^, window="gitlab"].
+이 워크샵 환경은 {product_name_rhdh} Helm Chart를 사용하여 내부 개발자 플랫폼폼을 설치하고 관리하고 있기 때문에, 구성 값은 Helm Values 파일의 upstream.backstage.appConfig 속성 아래에 중첩되어 있습니다. 
+구성 파일을 보려면 https://gitlab-gitlab.{openshift_cluster_ingress_domain}/rhdh/developer-hub-config/-/blob/main/values.yaml[GitLab에서 rhdh/developer-hub-config repository^, window="gitlab"]에 방문하세요.
 
-Your workshop environment has been pre-configured such that this repository in GitLab is continuously monitored and deployed using a https://openshift-gitops-server-openshift-gitops.{openshift_cluster_ingress_domain}/applications[`backstage` Application in OpenShift GitOps^, window="argo"] (login using the `admin` user and the password `{openshift_gitops_password}`).
+워크샵 환경은 GitLab에 있는 이 리포지토리가 https://openshift-gitops-server-openshift-gitops.{openshift_cluster_ingress_domain}/applications[OpenShift GitOps의 `backstage` Application^, window="argo"]을 사용하여 지속적으로 모니터링되고 배포되도록 미리 구성되었습니다. 
+(OpenShift GitOps에 로그인할 때 admin 사용자와 비밀번호 {openshift_gitops_password}를 사용하세요)
 
-With that out of the way, let's get to work on configuring your instance of {product_name_rhdh}!
+Gitlab에서 Helm Values 파일의 내용을 변경하면, 변경한 구성을 반영하여 {product_name_rhdh} 컨테이너가 재배포 됩니다.
+
+이제 준비가 끝났으니, {product_name_rhdh} 인스턴스 구성을 시작해 보겠습니다!

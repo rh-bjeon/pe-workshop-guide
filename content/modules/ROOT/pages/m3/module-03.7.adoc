@@ -2,81 +2,83 @@
 
 include::../style.adoc[]
 
-== Platform Engineer Activity: Setup Role-Based Access Control
+== 플랫폼 엔지니어 활동: 역할 기반 접근 제어 설정
 
-NOTE: This is an Optional Module. You can choose to do this if time permits or this interests you.
+NOTE: 이 모듈은 선택 사항입니다. 시간이 허락되거나 관심이 있는 경우에 수행할 수 있습니다.
 
-By setting up Role-Based Access Control (RBAC), the Platform Engineer can restrict the visibility of entities and availability of actions to subsets of users. It's possible to define roles with specific permissions and then assign those roles to the Users/Groups to meet the specific needs of your organization and teams. RBAC can be configured via the Red Hat Developer Hub UI and REST API, or by using configuration files. 
+역할 기반 접근 제어(RBAC)를 설정하면 플랫폼 엔지니어가 사용자들의 하위 집합에 대해 엔터티의 가시성 및 액션의 가용성을 제한할 수 있습니다. 특정 권한을 가진 역할을 정의하고, 그런 다음 해당 역할을 사용자/그룹에 할당하여 조직 및 팀의 특정 요구를 충족시킬 수 있습니다. RBAC는 Red Hat Developer Hub UI와 REST API를 통해 구성하거나 구성 파일을 사용하여 설정할 수 있습니다.
 
-In this module you will 
+이 모듈에서는 다음을 수행합니다.
 
-* Define policies in a declarative fashion using a configuration file.
-* Create a ConfigMap to hold your RBAC configuration file.
-* Configure {product_name_rhdh} to use this ConfigMap.
+* 구성 파일을 사용하여 선언적인 방식으로 정책을 정의합니다.
+* RBAC 구성 파일을 보관할 ConfigMap을 생성합니다.
+* {product_name_rhdh}가 이 ConfigMap을 사용하도록 구성합니다.
 
 
-== RBAC Configuration File Overview
+== RBAC 구성 파일 개요
 
-Policies are stored on OpenShift using a ConfigMap. The ConfigMap containing policies has has been pre-deployed to streamline this section of the workshop. Click https://console-openshift-console.{openshift_cluster_ingress_domain}/k8s/ns/backstage/configmaps/rbac-policy[here to view, window="console"] the policies in the OpenShift `backstage` namespace. The RBAC policies are defined using the Casbin rules format.
+정책은 OpenShift에서 ConfigMap을 사용하여 저장됩니다. 정책을 포함하는 ConfigMap은 워크샵의 이 섹션을 원활하게 진행할 수 있도록 미리 배포되었습니다. OpenShift `backstage` 네임스페이스에서 정책을 보려면 https://console-openshift-console.{openshift_cluster_ingress_domain}/k8s/ns/backstage/configmaps/rbac-policy[여기, window="console"]를 클릭하세요. RBAC 정책은 Casbin 규칙 형식을 사용하여 정의됩니다.
 
 [NOTE]
 ====
-Casbin is a powerful and efficient open-source access control library that supports various access control models for enforcing authorization. For information about the Casbin rules format, see https://casbin.org/docs/category/the-basics[Basics of Casbin rules, window="content"].
+Casbin은 다양한 접근 제어 모델을 지원하는 강력하고 효율적인 오픈소스 접근 제어 라이브러리입니다. Casbin 규칙 형식에 대한 정보는 https://casbin.org/docs/category/the-basics[Casbin 규칙의 기초, window="content"]에서 확인할 수 있습니다.
 ====
 
-Policies define roles and their associated permissions, and assign roles to groups and users. The following example states that any user or group with role `role:default/platformengineer` can create Catalog Entities:
+정책은 역할과 해당 역할에 연결된 권한을 정의하고, 역할을 그룹과 사용자에게 할당합니다. 다음 예시는 `role:default/platformengineer` 역할을 가진 사용자나 그룹이 카탈로그 엔터티를 생성할 수 있다고 명시하고 있습니다.
+
 ``` yaml
 p, role:default/platformengineer, catalog.entity.create, create, allow
 ```
 
-To assign this role to a group `group:default/platformengineers`, you'd use the following sytntax:
+이 역할을 그룹 `group:default/platformengineers` 에 할당하려면 다음 구문을 사용합니다.
 ``` yaml
 g, group:default/platformengineers, role:default/platformengineer
 ```
 
-The result is that users belonging to the `platformengineers` group can create Catalog Entities.
+결과적으로 `platformengineers` 그룹에 속한 사용자는 카탈로그 엔터티를 생성할 수 있습니다.
 
-== Enable the RBAC Plugin and Setup the Policies
+== RBAC 플러그인 활성화 및 정책 설정
 
-As with other {product_name_rhdh} plugins, enabling RBAC involves modifying the configuration file stored in GitLab.
+다른 {product_name_rhdh} 플러그인과 마찬가지로 RBAC를 활성화하려면 GitLab에 저장된 구성 파일을 수정해야 합니다.
 
-. Access the https://gitlab-gitlab.{openshift_cluster_ingress_domain}/rhdh/developer-hub-config/-/blob/main/values.yaml[rhdh/developer-hub-config configuration on GitLab, window="gitlab"].
-. Select *Edit > Edit single file*. When prompted, login as *(pe1/{common_password})*
-. There are 3 sections in the {product_name_rhdh} configuration that need to be modified. All of them are under `-- RBAC --` blocks. You can use `CMD + /` or `CTRL + /` keys to uncomment the blocks.
-.. Look for the first block; This enables the `backstage-community-plugin-rbac` dynamic plugin which allows you to assign permissions to users and groups; highlight this block and uncomment it.
+. https://gitlab-gitlab.{openshift_cluster_ingress_domain}/rhdh/developer-hub-config/-/blob/main/values.yaml[GitLab의 rhdh/developer-hub-config 구성, window="gitlab"]을 엽니다.
+. **Edit > Edit single file**을 선택합니다. 메시지가 표시되면 **(pe1/{common_password})**로 로그인합니다.
+. {product_name_rhdh} 구성에는 수정해야 할 섹션이 3개 있습니다. 모두 `-- RBAC --` 블록 아래에 있습니다. `CMD + /` 또는 `CTRL + /` 키를 사용하여 블록의 주석 처리를 해제할 수 있습니다.
+.. 첫 번째 블록을 찾으세요. 이를 통해 사용자 및 그룹에 권한을 할당할 수 있는 `backstage-community-plugin-rbac` 동적 플러그인이 활성화됩니다. 이 블록을 강조 표시하고 주석 처리를 제거합니다.
 +
 image:m3/rbac-block1.png[width=60%]
-.. The second block defines RBAC admin users and references the file contained in ConfigMap explained in the previous section; highlight and uncomment it.
+.. 두 번째 블록은 RBAC 관리자 사용자를 정의하고 이전 섹션에서 설명한 ConfigMap에 포함된 파일을 참조합니다. 이 부분을 강조 표시하고 주석 처리를 제거합니다.
+
 +
 image:m3/rbac-block2.png[width=60%]
-.. The final block sets up the volumes and mounts the file from the ConfigMap to enable the RBAC configuration. This section is a bit long, so the screenshot is edited for brevity; highlight the whole section and uncomment it.
+.. 마지막 블록은 볼륨을 설정하고 ConfigMap에서 파일을 마운트하여 RBAC 구성을 활성화합니다. 이 섹션은 조금 길어서 화면 캡처가 간략화되어 있습니다. 전체 섹션을 강조 표시하고 주석을 해제하십시오.
 +
 image:m3/rbac-block3.png[width=70%]
-.. Scroll down and enter a commit message: `feat: enable RBAC` and click the *Commit* button.
-. Visit the https://openshift-gitops-server-openshift-gitops.{openshift_cluster_ingress_domain}/applications[`backstage` Application in OpenShift GitOps^, window="argo"] (login using `admin`/`{openshift_gitops_password}`) and click *Refresh*. Wait until it reports a `Healthy` status.
+.. 아래로 스크롤하여 `feat: enable RBAC` 커밋 메시지를 입력합니다. 그리고 *Commit* 버튼을 클릭합니다.
+. https://openshift-gitops-server-openshift-gitops.{openshift_cluster_ingress_domain}/applications[OpenShift GitOps의 `backstage` 애플리케이션^, window="argo"] 화면으로 이동해서서(`admin`/`{openshift_gitops_password}`를 사용하여 로그인) **Refresh**를 클릭합니다.  `Healthy` 상태가 될 때까지 기다립니다.
 
-== Test the RBAC Configuration
+== RBAC 구성 테스트
 
-=== As a Platform Engineer
+=== 활동: 플랫폼 엔지니어
 
-. Ensure you're logged in as a Platform Engineer.
+. 플랫폼 엔지니어로 로그인했는지 확인합니다.
 +
-.Click to see how
+.클릭하여 방법을 확인합니다.
 [%collapsible]
 ====
-* Navigate to {product_name_rhdh}'s https://backstage-backstage.{openshift_cluster_ingress_domain}/settings[Settings, window="rhdh"] screen and check the logged-in user's name under the Profile section. 
-* If you are not logged in as a Platform Engineer (`pe` user), Click on Sign Out.
-* Log in as `pe1/{common_password}`.
+* {product_name_rhdh}의 https://backstage-backstage.{openshift_cluster_ingress_domain}/settings[Settings, window="rhdh"] 화면으로 이동하여 프로필 섹션에서 로그인한 사용자의 이름을 확인합니다.
+* 플랫폼 엔지니어(`pe` 유저)로 로그인하지 않은 경우, 로그아웃을 클릭합니다.
+* `pe1/{common_password}`로 로그인합니다. 
 +
 image:m3/pe-signout.png[width=70%]
 ====
-. You will now be able to view the RBAC policies you setup in the https://backstage-backstage.{openshift_cluster_ingress_domain}/rbac[Administration > RBAC, window="rhdh"] left-hand menu.
-. Policies managed using a CSV file cannot be edited or deleted using the {product_name_rhdh} Web UI. 
-. You can download the list of users in CSV format using the {product_name_rhdh} web interface.
+. 이제 왼쪽의 https://backstage-backstage.{openshift_cluster_ingress_domain}/rbac[Administration > RBAC, window="rhdh"] 메뉴에서 설정한 RBAC 정책을 볼 수 있습니다.
+. CSV 파일을 사용하여 관리되는 정책의 경우, {product_name_rhdh} 웹 UI를 사용하여 편집하거나 삭제할 수 없습니다. (CSV파일을 사용하지 않은 경우에는 가능)
+. {product_name_rhdh} 웹 인터페이스를 사용하여 CSV 형식으로 사용자 목록을 다운로드할 수 있습니다. 
 +
 image:m3/rbac-download-users.png[]
 
-* This downloaded file contains a list of active users and last logged in times as shown below
+* 다운로드된 파일에는 아래에 표시된 대로 활성 사용자 목록과 마지막 로그인 시간이 포함되어 있습니다. 
 +
 ``` txt
 userEntityRef,displayName,email,lastAuthTime
@@ -84,20 +86,19 @@ user:default/dev1,dev1 rhdh,dev1@rhdemo.com,"Tue, 10 Dec 2024 05:25:00 GMT"
 user:default/pe1,pe1 rhdh,pe1@rhdemo.com,"Tue, 10 Dec 2024 05:25:22 GMT"
 ```
 
-. Navigate to the https://backstage-backstage.{openshift_cluster_ingress_domain}/create[*Create* screen, window="rhdh"] and confirm you can see the *Register Existing Component* button. 
+. https://backstage-backstage.{openshift_cluster_ingress_domain}/create[*Create* 화면, window="rhdh"]으로 이동하여 *Register Existing Component* 버튼이 보이는지 확인합니다. 
 
-=== As a Developer
-. Logout from your *pe1* user, and log back in as a developer with `dev1/{common_password}`. 
-. You will not be able to see the *Administration > RBAC* menu, since developers are not assigned the `admin` role in the {product_name_rhdh} configuration.
-. Navigate to the https://backstage-backstage.{openshift_cluster_ingress_domain}/create[*Create* screen, window="rhdh"]. 
-. Note that you cannot see the *Register Existing Component* button. You can still use the templates already created.
+=== 활동: 개발자
+. *pe1* 사용자에서 로그아웃하고 `dev1/{common_password}` 를 사용하여 개발자로 다시 로그인합니다. 
+. {product_name_rhdh} 구성에서 개발자에게 `admin` 역할이 할당되지 않았으므로 *Administration > RBAC* 메뉴를 볼 수 없습니다. 
+. https://backstage-backstage.{openshift_cluster_ingress_domain}/create[*Create* 화면, window="rhdh"]으로 이동합니다.
+. *Register Existing Component* 버튼도 보이지 않습니다. 이미 생성된 템플릿은 계속 사용할 수 있습니다. 
 +
 image:m3/developer-rbac-create.png[]
-. This is because, as we saw earlier, the RBAC policy has been setup to allow `catalog.entity.create` only for `group:default/platformengineers`
+. 위와 같은 변화는 앞서 살펴본 바와 같이 RBAC 정책이 `group:default/platformengineers` 에 대해서만 `catalog.entity.create`를 허용하도록 설정되었기 때문입니다.
 
+== 결론
 
-== Conclusion
+지금까지 이 워크샵에서는 플랫폼 엔지니어만 카탈로그 엔티티를 생성할 수 있다고 가정했지만, 사실 RBAC 정책을 구성하지 않으면 모든 사용자가 엔티티를 생성, 수정 및 삭제할 수 있습니다. RBAC를 사용하면 조직에 맞게 읽기/쓰기 접근을 구성할 수 있습니다.
 
-So far in this workshop we assumed that only Platform Engineers can create Catalog Entities, but without configuring RBAC policies any user can create, edit, and delete Entities. Using RBAC allows you to configure read/write access as it suits your organization.
-
-For details on other ways to setup RBAC polices refer to the https://docs.redhat.com/en/documentation/red_hat_developer_hub/latest/html-single/authorization[Authorization guide in the {product_name_rhdh} documentation^, window="content"].
+RBAC 정책을 설정하는 다른 방법에 대한 자세한 내용은 https://docs.redhat.com/en/documentation/red_hat_developer_hub/latest/html-single/authorization[{product_name_rhdh} 문서의 권한 부여 가이드^, window="content"]를 참조하시길 바랍니다.

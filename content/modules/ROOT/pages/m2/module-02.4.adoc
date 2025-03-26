@@ -1,42 +1,48 @@
 :imagesdir: ../../assets/images
 
-== Activity: Synchronize User & Group Entities
+== 활동: 사용자 및 그룹 엔터티 동기화
 
 include::../style.adoc[]
 
-In xref:m2/module-02.1.adoc[module 2.1] you learned that the Software Catalog contains Entities, and saw a sample `appConfig` that contained a `catalog.locations` configuration. That example configuration imported entities from a file located in a hardcoded Git repository. This pattern is known as a https://backstage.io/docs/features/software-catalog/#static-catalog-configuration[static configuration^, window="content"]. {product_name_rhdh} will occasionally poll for updates to the specified file locations and update the Entities in the Software Catalog accordingly.
+xref:m2/module-02.1.adoc[module 2.1]에서 소프트웨어 카탈로그에 엔터티가 포함되어 있다는 것을 알게 되었고, `catalog.locations` 구성을 포함하는 샘플 `appConfig` 를 보았습니다. 
+이 Configuration 예시는 하드코딩된 Git 저장소에 있는 파일에서 엔터티를 가져왔습니다. 이 패턴은 https://backstage.io/docs/features/software-catalog/#static-catalog-configuration[static configuration^, window="content"]으로 알려져 있습니다. 
+{product_name_rhdh}는 지정된 파일 위치에서 주기적으로 업데이트를 확인하고, 그에 따라 소프트웨어 카탈로그의 엔터티를 업데이트합니다.
 
-An option for dynamically importing and synchronizing Entities is via _providers_. Providers are typically provided by way of plugins, and are configured using the `catalog.providers` entry in the `appConfig`. Let's use the Keycloak plugin to synchronize Users and Groups to your Software Catalog.
+엔터티를 동적으로 가져오고 동기화하는 옵션 중 하나는 카탈로그의 _providers_ 를 사용하는 것입니다. 
+Providers는 일반적으로 플러그인을 통해 제공되며, appConfig의 `catalog.providers` 항목을 사용하여 구성됩니다. 이제 Keycloak 플러그인을 사용하여 사용자와 그룹을 소프트웨어 카탈로그와 동기화해 보겠습니다.
 
-. View your https://gitlab-gitlab.{openshift_cluster_ingress_domain}/rhdh/developer-hub-config/-/blob/main/values.yaml[values.yaml file in the developer-hub-config repository^, window="gitlab"].
-. Select **Edit > Edit single file**. When prompted, login as `pe1` / `{common_password}`.
-. You will find the `backstage-community-plugin-catalog-backend-module-keycloak-dynamic` package under the `dynamic.plugins` field that is set to `disabled: false`. This means that, this plugin has been enabled in your installation.
+. https://gitlab-gitlab.{openshift_cluster_ingress_domain}/rhdh/developer-hub-config/-/blob/main/values.yaml[developer-hub-config 저장소의 values.yaml 파일^, window="gitlab"]을 봅니다. 
+. **Edit > Edit single file**을 선택합니다. 메시지가 표시되면 `pe1` / `{common_password}` 로 로그인합니다. 
+. `dynamic.plugins` 필드 아래에서 `disabled: false`로 설정된 `backstage-community-plugin-catalog-backend-module-keycloak-dynamic` 패키지를 찾을 수 있습니다. 즉, 이 플러그인은 설치 및 활성화되었습니다. 
 +
 image:m2/keycloak-dynamic-plugin.png[width=60%]
-. Uncomment the `keycloakOrg` configuration within the `appConfig.catalog.providers` block (look for `--- KEYCLOAK_CATALOG_PROVIDERS ---`, highlight the block, then press `CMD + /` or `CTRL + /`).
+. `appConfig.catalog.providers` 블록 내에서 `keycloakOrg` 구성의 주석 처리를 제거합니다(`--- KEYCLOAK_CATALOG_PROVIDERS ---` 를 찾아 블록을 강조 표시한 다음 `CMD + /` 또는 `CTRL + /` 를 누릅니다). 
 +
 image:m2/keycloak-commented-block.png[width=70%]
 
-This block of configuration instructs the Keycloak provider to synchronize *Users and Groups* from the specified Keycloak Realm to the Software Catalog. Doing so will enable developers and platform engineers to associate Users and Groups with Entities in the Software Catalog - very useful for finding out which individual or team is responsible for a particular microservice or database, for example.
+이 구성 블록은 지정된 Keycloak Realm의 **사용자 및 그룹**을 소프트웨어 카탈로그와 동기화하도록 Keycloak 공급자에게 지시합니다. 
+이렇게 하면 개발자와 플랫폼 엔지니어가 사용자 및 그룹을 소프트웨어 카탈로그의 엔터티와 연결할 수 있습니다. 
+예를 들어 특정 마이크로서비스나 데이터베이스를 담당하는 개인이나 팀을 찾는 데 매우 유용합니다. 
 
-. Scroll down and enter a commit message: `feat: enable the keycloak catalog provider`
-. Click the *Commit* button.
-. Visit the https://openshift-gitops-server-openshift-gitops.{openshift_cluster_ingress_domain}/applications[`backstage` Application in OpenShift GitOps^, window="argo"] and click *Refresh*. 
+. 아래로 스크롤하여 커밋 메시지를 입력합니다: `feat: enable the keycloak catalog provider` 
+. *Commit* 버튼을 클릭합니다.
+. https://openshift-gitops-server-openshift-gitops.{openshift_cluster_ingress_domain}/applications[OpenShift GitOps의 `backstage` Application^, window="argo"]을 방문하고 *Refresh*를 클릭합니다. 
 +
-If needed, login using `admin`/`{openshift_gitops_password}`.
+필요한 경우 `admin`/`{openshift_gitops_password}` 를 사용하여 로그인합니다. 
 +
-NOTE: Argo CD has been setup to auto-sync every two minutes. Instead of having to wait for auto-sync to kick in, you are instructed to manually sync the Argo CD application.
+NOTE: Argo CD는 2분마다 자동 동기화되도록 설정되었습니다. 자동 동기화가 시작될 때까지 기다릴 필요 없이 위와 같이 Argo CD 애플리케이션을 수동으로 동기화합니다. 
 
-Your changes will start to rollout. Confirm this by visiting the https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/backstage?view=graph[backstage project, window="console"] on OpenShift and checking that a new Pod is being started, or waiting until the Application in OpenShift GitOps reports *Healthy* instead of *Progressing*.
+변경 사항이 롤아웃되기 시작합니다. OpenShift에서 https://console-openshift-console.{openshift_cluster_ingress_domain}/topology/ns/backstage?view=graph[backstage project, window="console"]를 방문하여 새 Pod가 시작되는지 확인하거나 OpenShift GitOps의 애플리케이션이 *Progressing* 대신 *Healthy* 상태를를 보고할 때까지 기다려 확인합니다. 
 
 image:m2/gitops-progressing.png[Backstage Application in Progressing Status]
 
-Once the new Pod has started, navigate to https://console-openshift-console.{openshift_cluster_ingress_domain}/k8s/ns/backstage/core%7Ev1%7EPod[OpenShift^, window="console"] and check the logs for lines that reference the `KeycloakOrgEntityProvider`. You should see a line stating that a number of Users and Groups have been read from Keycloak.
+새 Pod가 시작되면 https://console-openshift-console.{openshift_cluster_ingress_domain}/k8s/ns/backstage/core%7Ev1%7EPod[OpenShift^, window="console"]로 이동하여 `KeycloakOrgEntityProvider` 를 참조하는 줄에 대한 로그를 확인합니다. Keycloak에서 여러 사용자와 그룹을 읽었다는 내용이 있는 줄이 표시되어야 합니다. 
 
-image:m2/openshift-pod-logs.png[{product_name_rhdh} Pod logs as seen in the OpenShift Console]
+image:m2/openshift-pod-logs.png[{product_name_rhdh} OpenShift 콘솔에서 볼 수 있는 Pod 로그]
 
-You can further confirm that the Users and Groups have been synchronized by visiting the Software Catalog in https://backstage-backstage.{openshift_cluster_ingress_domain}[{product_name_rhdh}^, window="rhdh"] and setting the *Kind* dropdown to User. 
+https://backstage-backstage.{openshift_cluster_ingress_domain}[{product_name_rhdh}^, window="rhdh"]에서 소프트웨어 카탈로그를 방문하여 *Kind* 드롭다운을 User로 설정하면 User와 Groups가 동기화되었는지 확인할 수 있습니다. 
 
-image:m2/rhdh-users-list.png[User Entities listed in {product_name_rhdh}]
+image:m2/rhdh-users-list.png[{product_name_rhdh}에 나열된 User 엔터티]
 
-Nice work! You enabled a dynamic plugin and configured a catalog provider based on it!
+잘하셨습니다! 동적 플러그인을 활성화하고 이를 기반으로 카탈로그 공급자를 구성했습니다!
+

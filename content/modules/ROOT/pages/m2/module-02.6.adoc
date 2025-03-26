@@ -1,68 +1,73 @@
 :imagesdir: ../../assets/images
 
-== Activity: Enabling GitLab Entity Discovery & TechDocs
+== 활동: GitLab Entity 탐색 및 TechDocs 활성화
 
 include::../style.adoc[]
 
-Now that the import of User and Group entities, and authentication is enabled for those same users, let's focus on importing more Entities from your Git repositories.
+이제 사용자 및 그룹 엔터티를 가져오고 동일한 사용자에 대한 인증이 활성화되었으므로 Git 저장소에서 더 많은 엔터티를 가져오는 데 집중해 보겠습니다.
 
-=== Enable GitLab Entity Discovery and TechDocs
+=== GitLab Entity 탐색 및 TechDocs 활성화
 
-Much like the Keycloak provider, you can use a https://backstage.io/docs/integrations/gitlab/discovery/[GitLab provider to discover^, window="console"] and import Entities from repositories in GitLab. This functionality is provided by the 	
-https://npmjs.com/package/@backstage/plugin-catalog-backend-module-gitlab/v/0.3.21[@backstage/plugin-catalog-backend-module-gitlab plugin^, window="content"]. You can see that this is a supported https://docs.redhat.com/en/documentation/red_hat_developer_hub/1.3/html/dynamic_plugins_reference/index#con-preinstalled-dynamic-plugins[dynamic plugin in the {product_name_rhdh} documentation^, window="content"].
+You can see that this is a supported https://docs.redhat.com/en/documentation/red_hat_developer_hub/1.3/html/dynamic_plugins_reference/index#con-preinstalled-dynamic-plugins[dynamic plugin in the {product_name_rhdh} documentation^, window="content"].
 
-To install and configure this plugin:
+Keycloak 제공자와 매우 유사하게 https://backstage.io/docs/integrations/gitlab/discovery/[GitLab provider^, window="console"]를 사용하여 GitLab의 저장소에서 엔티티를 검색하고 가져올 수 있습니다.
 
-. Visit the https://gitlab-gitlab.{openshift_cluster_ingress_domain}/rhdh/developer-hub-config/-/blob/main/values.yaml[rhdh/developer-hub-config repository^, window="gitlab"] in your GitLab instance.
-. Select *Edit > Edit single file*.
-. Uncomment the `--- TECHDOCS_PLUGIN ---` section in `dynamic.plugins` section of the YAML, to enable the TechDocs and GitLab dynamic plugins.
+
+이 기능은 https://npmjs.com/package/@backstage/plugin-catalog-backend-module-gitlab/v/0.3.21[@backstage/plugin-catalog-backend-module-gitlab 플러그인^, window="content"]을 통해 제공됩니다. 
+이 플러그인은 https://docs.redhat.com/en/documentation/red_hat_developer_hub/1.3/html/dynamic_plugins_reference/index#con-preinstalled-dynamic-plugins[{product_name_rhdh} 문서의 동적 플러그인^, window="content"] 목록에서도 확인할 수 있습니다.
+
+이 플러그인을 설치하고 구성하려면,
+
+. GitLab 인스턴스에서 https://gitlab-gitlab.{openshift_cluster_ingress_domain}/rhdh/developer-hub-config/-/blob/main/values.yaml[rhdh/developer-hub-config 저장소^, window="gitlab"]를 방문합니다.
+. *Edit > Edit single file*을 선택합니다.
+. TechDocs 및 GitLab 동적 플러그인을 활성화하려면 YAML의 `dynamic.plugins` 섹션에서 `--- TECHDOCS_PLUGIN ---` 섹션의 주석 처리를 해제합니다.
 +
 [NOTE]
 ====
-To uncomment multiple lines of code, highlight the lines and press `CMD + /` (on macOS) or `CTRL + /` (on Linux/Windows).
+여러 줄의 코드에 대한 주석 처리를 해제하려면 해당 줄을 드래그하여 강조 표시하고 `CMD + /` (macOS) 또는 `CTRL + /` (Linux/Windows)를 누릅니다.
 ====
 +
 image:m2/gitlab-techdoc-plugin.png[TechDocs and GitLab dynamic plugins, width=60%]
-. Look for the YAML between the `--- TECHDOCS_CONFIG ---` block and uncomment it.
+. `--- TECHDOCS_CONFIG ---` 블록 사이에 있는 YAML을 찾아 주석 처리를 제거합니다.
 +
 image:m2/gitlab-techdoc-config.png[TechDocs Config for Local Builder, width=50%]
-. Find the `appConfig.catalog.providers` configuration and uncomment the `--- GITLAB_CATALOG_PROVIDER ---` block as shown below. +
+. `appConfig.catalog.providers` 구성을 찾아 아래와 같이 `--- GITLAB_CATALOG_PROVIDER ---` 블록의 주석 처리를 제거합니다. +
 +
 image:m2/gitlab-catalog-provider.png[GitLab Catalog Provider, width=70%]
 // . Verify that you indentation matches that shown in the screenshot, 
-. Commit your changes with the message `feat: add gitlab autodiscovery`.
+. `feat: add gitlab autodiscovery` 메시지와 함께 변경 사항을 커밋합니다.
 // +
 // image:m2/gitlab-discovery.png[GitLab code editor showing catalog providers configuration for {product_name_rhdh}]
-. Click the *Refresh* button on the https://openshift-gitops-server-openshift-gitops.{openshift_cluster_ingress_domain}/applications[`backstage` Application in OpenShift GitOps^, window="argo"].
+. https://openshift-gitops-server-openshift-gitops.{openshift_cluster_ingress_domain}/applications[OpenShift GitOps의 `backstage` 애플리케이션^, window="argo"]에서 *Refresh* 버튼을 클릭합니다. 
 
-=== Verify GitLab Entity Discovery is Active
+=== GitLab Entity Discovery 활성화 확인
 
-. After a few moments your new {product_name_rhdh} configuration will finish rolling out. Check the logs for the new https://console-openshift-console.{openshift_cluster_ingress_domain}/k8s/ns/backstage/core%7Ev1%7EPod[{product_name_rhdh} Pod^, window="console"]. You should see that a repository was discovered - that means the repository contains https://backstage.io/docs/features/software-catalog/descriptor-format/[catalog-info.yaml, window="blank"] file.
+. 잠시 후, 새 {product_name_rhdh} 구성이 완료될 것입니다. 새로운 https://console-openshift-console.{openshift_cluster_ingress_domain}/k8s/ns/backstage/core%7Ev1%7EPod[{product_name_rhdh} Pod^, window="console"]의 로그를 확인해 보세요. 리포지토리가 발견되었다는 메시지가 표시되면, 해당 리포지토리에 https://backstage.io/docs/features/software-catalog/descriptor-format/[catalog-info.yaml, window="blank"] 파일이 포함되어 있다는 의미입니다.
 +
 image:m2/rhdh-logs-gitlab-discovery.png[GitLab Autodiscovery Logs in the OpenShift Console]
-. The repository in question is the https://gitlab-gitlab.{openshift_cluster_ingress_domain}/global/global-techdocs[global/global-techdocs^, window="gitlab"]. This repository contains a __catalog-info.yaml__ that defines a Component, and an annotation `backstage.io/techdocs-ref` that tells the TechDocs plugin where to find the source for documentation builds for the Component. 
+. 문제의 리포지토리는 https://gitlab-gitlab.{openshift_cluster_ingress_domain}/global/global-techdocs[global/global-techdocs^, window="gitlab"]입니다. 이 리포지토리에는 __catalog-info.yaml__ 파일이 포함되어 있으며, 이 파일은 컴포넌트를 정의하고, `backstage.io/techdocs-ref`라는 주석을 통해 TechDocs 플러그인에게 해당 컴포넌트의 문서 빌드를 위한 소스를 어디서 찾을 수 있는지 알려줍니다.
 +
-image:m2/global-techdocs-cat-info.png[Global TechDocs catalog-info.yaml file]
+image:m2/global-techdocs-cat-info.png[Global TechDocs의 catalog-info.yaml 파일]
 
-. Visit your https://backstage-backstage.{openshift_cluster_ingress_domain}/[instance of {product_name_rhdh}^, window="rhdh"] and view the Software Catalog. Make sure that the `Kind` dropdown is set to _Component_. You should see the _global-techdocs_ Component.
+. https://backstage-backstage.{openshift_cluster_ingress_domain}/[instance of {product_name_rhdh}^, window="rhdh"]를 방문하여 소프트웨어 카탈로그를 확인하세요. `Kind` 드롭다운이 __Component__로 설정되어 있는지 확인하세요. 그러면 __global-techdocs__ 컴포넌트트가 표시되어야 합니다.
 +
-image:m2/global-techdocs-component.png[The Global TechDocs Component in the Software Catalog]
+image:m2/global-techdocs-component.png[소프트웨어 카탈로그의 Global TechDocs 컴포넌트]
 
-=== Viewing TechDocs
+=== TechDocs 보기
 
-. Click the _global-techdocs_ Component name in the Software Catalog, and select the `Docs` tab.
+. 소프트웨어 카탈로그에서 __global-techdocs__ 컴포넌트 이름을 클릭하고 `Docs` 탭을 선택합니다.
 +
 image:m2/global-techdocs-component-view.png[Global TechDocs being rendered, width=70%]
-. It should compile and render the TechDocs.
+. TechDocs를 컴파일하고 렌더링해야 합니다.
 +
 image:m2/global-techdocs-docs.png[Global TechDocs being rendered]
-. You might have noticed that the side menu has a new *Docs* entry too. This appeared when you enabled the TechDocs plugin! 
+. 사이드 메뉴에 새로운 *Docs* 항목도 있는 걸 알아차리셨을 겁니다. TechDocs 플러그인을 활성화했을 때 나타났죠!
 +
 image:m2/global-docs-menu.png[Docs side menu]
 
-== TechDocs Generation and Storage Configuration
+== TechDocs 생성 및 스토리지 구성
 
-Recall the `techdocs` configuration from your https://gitlab-gitlab.{openshift_cluster_ingress_domain}/rhdh/developer-hub-config/-/blob/main/values.yaml[values.yaml file in GitLab, window="gitlab"]. It should resemble the following example:
+https://gitlab-gitlab.{openshift_cluster_ingress_domain}/rhdh/developer-hub-config/-/blob/main/values.yaml[GitLab의 values.yaml 파일, window="gitlab"]에서 `techdocs` 구성을 떠올려 보세요. 다음 예와 비슷해야 합니다.
 
 [source,yaml,subs=attributes+]
 ----
@@ -74,14 +79,15 @@ techdocs:
     runIn: local
 ----
 
-This particular configuration is instructing TechDocs to build (`builder`) and store documentation locally (`publisher.type`), in the running {product_name_rhdh} container. 
+이 구성은 TechDocs에게 문서를 빌드(`builder`)하고 실행 중인 {product_name_rhdh} 컨테이너 내에서 문서를 로컬에 저장(`publisher.type`)하도록 지시하고 있습니다.
 
-The `generator: local` option instructs TechDocs to build the documentation on-demand. This requires the underlying container to have the necessary dependencies installed - {product_name_rhdh} has these dependencies in place.
+`generator: local` 옵션은 TechDocs에게 문서를 필요할 때마다 빌드하도록 지시합니다. 이를 위해서는 기본 컨테이너에 필요한 종속성이 설치되어 있어야 하며, {product_name_rhdh}에는 이러한 종속성이 이미 설치되어 있습니다.
 
-It's possible to offload the TechDocs build process to a CI/CD pipeline that uses the TechDocs CLI. In this scenario, the pipeline builds and publishes the TechDocs to https://backstage.io/docs/features/techdocs/using-cloud-storage/[S3 or other storage solution, window="content"]. The platform engineer must configure a `builder` of type `external` and the `publisher` to read from the same storage system to load the desired TechDocs for a given Entity if an alternative storage solution is used.
+TechDocs 빌드 프로세스를 CI/CD 파이프라인으로 이관하는 방법도 있습니다. 이 경우, 파이프라인은 TechDocs CLI를 사용하여 TechDocs를 빌드하고 이를 https://backstage.io/docs/features/techdocs/using-cloud-storage/[S3 또는 다른 스토리지 솔루션, window="content"]에 게시합니다. 
+이 때 플랫폼 엔지니어는 `builder`를 `external` 유형으로 설정하고 `publisher`가 특정 엔터티의 TechDocs를 로드할 수 있도록 동일한 스토리지 시스템에서 읽어오도록 구성해야 합니다.
 
-Using the `external` builder strategy reduces load on the {product_name_rhdh} instance, but places the burden of building and publishing the TechDocs on authors. Repository owners and authors can build their TechDocs using the https://backstage.io/docs/features/techdocs/cli/[TechDocs CLI, window="content"].
+`external` 빌더 전략을 사용하면 {product_name_rhdh} 인스턴스에 대한 부담을 줄일 수 있지만, TechDocs를 빌드하고 게시하는 부담은 TechDocs의 작성자에게 맡겨집니다. 작성자와 리포지토리 소유자는 https://backstage.io/docs/features/techdocs/cli/[TechDocs CLI, window="content"]를 사용하여 TechDocs를 빌드할 수 있습니다.
 
-== Conclusion
+== 결론
 
-Congratulations! You've learned the core concepts of Backstage and {product_name_rhdh}. You also learned how to deploy and manage an instance of {product_name_rhdh} using the official Helm Chart via OpenShift GitOps.
+축하합니다! 이제 Backstage와 {product_name_rhdh}의 핵심 개념을 배우셨습니다. 또한 OpenShift GitOps를 통해 공식 Helm Chart를 사용하여 {product_name_rhdh} 인스턴스를 배포하고 관리하는 방법도 배웠습니다.

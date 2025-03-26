@@ -1,8 +1,8 @@
-= Module 3: Software Templates and Developer Experience
+= 모듈 3: 소프트웨어 템플릿 및 개발자 경험
 
 include::../style.adoc[]
 
-== Overview
+== 개요
 
 Software Templates in {product_name_rhdh} enable your team(s) to create Components and - through the use of "actions" provided by plugins - create resources in other systems such as your GitLab and OpenShift GitOps instances. Each Template is stored as an Entity, meaning you can import them similar to any other Entity.
 
@@ -10,19 +10,29 @@ Platform engineers will typically be the authors of Templates, and use them to c
 
 Templates are defined using YAML, but are rendered as a rich form in the {product_name_rhdh} UI when used by development teams.
 
-== Module Objectives
+{product_name_rhdh}의 소프트웨어 템플릿을 활용하면 팀이 컴포넌트를 생성하고, (플러그인이 제공하는 "actions"을 통해) GitLab 및 OpenShift GitOps 인스턴스와 같은 다른 시스템에서 리소스를 만들 수 있습니다. 각 템플릿은 엔터티(Entity)로 저장되므로 다른 엔터티와 마찬가지로 가져올 수 있습니다.
+
+플랫폼 엔지니어는 일반적으로 템플릿의 작성자이며, 모범 사례를 따라 승인된 프로세스 및 도구를 사용하는 "golden path"를 템플릿으로 구축합니다. 개발 팀은 이 템플릿을 활용하여 새로운 소프트웨어를 만듭니다. 이를 통해 플랫폼 관련 사항은 템플릿이 처리하고 개발자는 개발 작업에 집중할 수 있어 인지적 부담을 줄일 수 있습니다.
+
+템플릿은 YAML로 정의되지만, 개발 팀이 사용할 때에는 {product_name_rhdh} UI에서 리치 폼(Rich Form) 형태로 표시됩니다.
+
+== 모듈 목표
 
 * Create a Template (as the Platform Engineer)
 * Register the Template in the Software  (as the Platform  Engineer)
 * Create a new Component, GitLab Repository, and GitOps Application from the Template (as a Developer)
 
-== Workshop Environment
+* 템플릿 생성 (플랫폼 엔지니어 역할)
+* 소프트웨어 카탈로그에 템플릿 등록 (플랫폼 엔지니어 역할)
+* 템플릿을 활용하여 새로운 컴포넌트, GitLab 저장소소, GitOps 애플리케이션 생성 (개발자 역할)
 
-Your workshop environment has been preconfigured with the following software and platform components:
+== 워크샵 환경
+
+이번 워크샵 환경은 다음과 같은 소프트웨어 및 플랫폼 구성 요소로 사전 설정되어 있습니다.
 
 * Red Hat Build of Keycloak
 * OpenShift GitOps
 * OpenShift Pipelines
 * GitLab
 
-For the purposes of this workshop, we'll assume that your organization has standardized on these tools, and it's your objective as the platform engineer to integrate them with {product_name_rhdh}.
+이번 워크샵에서는 조직이 위의 도구들을 표준화하여 사용한다고 가정하며, 플랫폼 엔지니어로서 {product_name_rhdh}와의 통합을 목표로 합니다.

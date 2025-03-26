@@ -1,33 +1,35 @@
 :imagesdir: ../../assets/images
 
-== Developer Activity: Update a Component's Catalog Info
+== 개발자 활동: 컴포넌트의 카탈로그 정보 업데이트 
 
 include::../style.adoc[]
 
-The Argo CD Backstage plugin brings synced status, health status, and updates history of your services to your {product_name_rhdh}. However, simply installing the Argo CD plugin doesn't automatically make the deployment information visible when viewing Components in the Software Catalog. An `argocd/app-selector` annotation must be added to the Component's YAML definition. This annotation instructs the Argo CD plugin to fetch the information related to the Component from the Argo CD instance you configured.
+Argo CD Backstage 플러그인은 동기화 상태, 상태 정보, 서비스의 업데이트 이력을 {product_name_rhdh}에 제공합니다. 그러나 단순히 Argo CD 플러그인을 설치하는 것만으로는 소프트웨어 카탈로그에서 컴포넌트를 조회할 때 배포 정보를 자동으로 표시하지는 않습니다.
 
-IMPORTANT: Please ensure you are logged in as a Developer with dev1/{common_password} as you were guided to in a previous step.
+컴포넌트의 YAML 정의에 `argocd/app-selector` 주석(annotation)을 추가해야 합니다. 이 주석은 해당 컴포넌트와 관련된 정보를 설정된 Argo CD 인스턴스에서 가져오도록 Argo CD 플러그인에 지시합니다.
 
-Update your Quarkus application's _catalog-info.yaml_ with the correct annotation:
+IMPORTANT: 이전 단계에서 안내된 대로 dev1/{common_password} 계정으로 개발자로 로그인했는지 확인하세요.
 
-. Visit the https://gitlab-gitlab.{openshift_cluster_ingress_domain}/dev1/my-quarkus-app/-/blob/main/catalog-info.yaml[dev1/my-quarkus-app/catalog-info.yaml, window="gitlab"] file in GitLab.
-. Select _Edit > Edit single file_.
-. Uncomment the following annotation:
+Quarkus 애플리케이션의 _catalog-info.yaml_ 파일을 올바른 주석과 함께 업데이트하세요.
+
+. GitLab에서 https://gitlab-gitlab.{openshift_cluster_ingress_domain}/dev1/my-quarkus-app/-/blob/main/catalog-info.yaml[dev1/my-quarkus-app/catalog-info.yaml, window="gitlab"] 파일을 엽니다.
+. __Edit > Edit single file__을 선택합니다다.
+. 다음 YAML annotation의 주석을 제거합니다. 
 +
 [source,bash,role=execute,subs="attributes"]
 ----
 argocd/app-selector: rht-gitops.com/rhdh-gitops=dev1-my-quarkus-app
 ----
-. You can confirm this annotation is correct by visiting the https://rhdh-gitops-server-rhdh-gitops.{openshift_cluster_ingress_domain}/applications/rhdh-gitops/dev1-my-quarkus-app-dev[dev1-my-quarkus-app-dev in the rhdh-gitops instance, window="proj_argo"] and clicking the *Details* button to view the applied labels. Login as `admin` using `{common_password}` if prompted.
+. https://rhdh-gitops-server-rhdh-gitops.{openshift_cluster_ingress_domain}/applications/rhdh-gitops/dev1-my-quarkus-app-dev[rhdh-gitops 인스턴스의 dev1-my-quarkus-app-dev, window="proj_argo"]를 방문하여 적용된 레이블을 보려면 *Details* 버튼을 클릭하세요. 메시지가 표시되면 `{common_password}`를 사용하여 `admin` 으로 로그인하세요. 
 +
 image:m3/argocd-label.png[Argo CD Details with Labels]
-. Scroll down and enter a commit message `feat: Add argocd/app-selector annotation`.
-. Use the *Commit changes* button to commit the annotation.
+. 아래로 스크롤하여 커밋 메시지 `feat: Add argocd/app-selector annotation` 을 입력합니다. 
+. *Commit changes* 버튼을 사용하여 주석을 커밋합니다. 
 
-. Return to your https://backstage-backstage.{openshift_cluster_ingress_domain}/catalog/default/component/my-quarkus-app[instance of {product_name_rhdh}^, window="rhdh"] after committing the change to view the newly created `my-quarkus-app` Component. Use the *Schedule entity refresh* button to pull this change from Git to {product_name_rhdh} for your Quarkus application. 
+. 변경 사항을 커밋한 후 https://backstage-backstage.{openshift_cluster_ingress_domain}/catalog/default/component/my-quarkus-app[{product_name_rhdh} 인스턴스스^, window="rhdh"]로 돌아가 새로 만든 `my-quarkus-app` 컴포넌트를 확인합니다. *Schedule entity newlyfresh* 버튼을 사용하여 이 변경 사항을 Git에서 {product_name_rhdh}의 Quarkus 애플리케이션으로 가져옵니다. 
 +
 image:m3/rhdh-entity-refresh.png[Entity Refresh Button]
 
-. Next, refresh your browser. The *CD* tab should appear, and you can view the Argo CD Application's information.
+. 다음으로 브라우저를 새로 고칩니다. *CD* 탭이 나타나고 Argo CD 애플리케이션의 정보를 볼 수 있습니다. 
 +
 image:m3/rhdh-cd-tab.png[CD Tab in Component]

@@ -1,16 +1,18 @@
 :imagesdir: ../../assets/images
 
-== Introduction to Concepts
+== 개념 소개
 
 include::../style.adoc[]
 
 As mentioned earlier, Templates are defined using YAML and rendered as a rich form in the {product_name_rhdh} UI when used by development teams.
 
-Let's explore the Template structure using a sample Template in the https://gitlab-gitlab.{openshift_cluster_ingress_domain}/rhdh/template-quarkus-simple[rhdh/template-quarkus-simple^, window="gitlab"] repository in GitLab. 
+앞서 언급했듯이 템플릿은 YAML 형식으로 정의되며, 개발팀이 사용할 때 {product_name_rhdh} UI에서 리치 폼(Rich Form)으로 렌더링됩니다.
 
-=== Template YAML Structure
+GitLab의 https://gitlab-gitlab.{openshift_cluster_ingress_domain}/rhdh/template-quarkus-simple[rhdh/template-quarkus-simple^, window="gitlab"] 저장소에 있는 샘플 템플릿을 통해 구조를 살펴보겠습니다. 
 
-At a basic level, the Template is similar to the Component Entity you encountered in the _catalog-info.yaml_ in the prior module; resembling a Kubernetes Custom Resource Definition.
+=== 템플릿 YAML 구조
+
+기본적으로, 템플릿은 이전 모듈에서 다룬 _catalog-info.yaml_ 파일에서 본 컴포넌트 엔터티(Component Entity) 와 유사하며, Kubernetes의 Custom Resource Definition(CRD) 형태를 따릅니다.
 
 ```yaml
 apiVersion: scaffolder.backstage.io/v1beta3
@@ -30,7 +32,7 @@ spec:
   # other fields removed for brevity
 ```
 
-Where the Template Entity differs is that it contains additional fields:
+템플릿 엔터티의 차이점은 아래와 같은 추가 필드가 포함되어 있다는 것입니다.
 
 * spec.parameters
 * spec.steps
@@ -38,9 +40,9 @@ Where the Template Entity differs is that it contains additional fields:
 
 === Parameters
 
-The _spec.parameters_ field is used by platform engineers to enable developers to customise the output of the Template. Typically this customisation will be limited to parameters such as the name of the Component, Java package name, repository name, etc.
+_spec.parameters_ 필드는 플랫폼 엔지니어가 템플릿의 출력을 개발자가 맞춤 설정할 수 있도록 정의하는 부분입니다. 일반적으로 이러한 사용자 정의 영역은 컴포넌트 이름, Java 패키지명, 저장소 이름 등의 매개변수로 제한됩니다.
 
-Here's an example of the parameters:
+다음은 매개변수의 예입니다. 
 
 ```yaml
 spec:
@@ -67,22 +69,24 @@ spec:
           description: Maven Group Id
 ```
 
-You might have recognized this as a https://json-schema.org/[JSON Schema] structure. By using JSON Schema you can define the parameters that are supported by the template, and, more importantly, enforce validation on those parameters. The rendering of the form in the {product_name_rhdh} UI is managed by the https://github.com/rjsf-team/react-jsonschema-form[react-jsonschema-form^, window="content"] library.
+JSON Schema를 사용하면 템플릿이 지원하는 매개변수를 정의할 수 있을 뿐만 아니라, 입력값에 대한 유효성 검사도 적용할 수 있습니다.
 
+{product_name_rhdh} UI에서의 폼 렌더링은 https://github.com/rjsf-team/react-jsonschema-form[react-jsonschema-form^, window="content"] 라이브러리에 의해 관리됩니다. 
 
 [NOTE]
 ====
-`react-jsonschema-form` is a set of React components for building web forms from JSON Schema. It is core to scaffolder plugin's frontend functionality. These React components are responsible for rendering the form in which developers and end users fill out data needed to use the Software Template.
+`react-jsonschema-form`은 JSON Schema를 기반으로 웹 폼을 생성하는 React 컴포넌트 라이브러리로, 스캐폴더(Scaffolder) 플러그인의 핵심 프런트엔드 기능을 담당합니다. 이러한 React 구성 요소는 개발자와 최종 사용자가 소프트웨어 템플릿을 활용하는 데 필요한 데이터를 입력할 수 있도록 폼을 렌더링하는 역할을 합니다.
 ====
 
 The properties that have a `ui` prefix might have piqued your interest. These are special properties that provide instructions to the form, for example, to enable autocomplete or autofocus certain form fields when it is displayed in the {product_name_rhdh} UI.
 
+`ui` 접두어가 붙은 속성들이 눈에 띄었을 수 있습니다. `ui:*` 속성들은 {product_name_rhdh} UI에 표시될 때 자동완성 또는 특정 양식 필드에 자동 포커스를 활성화하는 등 폼의 동작을 사용자 친화적으로 조정하는 데 사용됩니다. 
 
 === Steps
 
-Once a developer has entered and confirmed their parameters, the Template is executed by the scaffolder - a service within the {product_name_rhdh} backend.
+개발자가 매개변수를 입력하고 확인하면, {product_name_rhdh} 백엔드 내의 스캐폴더에 의해 템플릿이 실행됩니다.
 
-The scaffolder executes the actions defined in _spec.steps_, for example, to publish code to a Git repository and register it in the Software Catalog:
+스캐폴더는 __spec.steps__에 정의된 작업을 실행하며, 예를 들어 코드를 Git 저장소에 게시하고(`publish:gitlab` 액션) 소프트웨어 카탈로그에 등록(`catalog:register` 액션)하는 등의 작업을 수행합니다.
 
 ```yaml
 spec:
@@ -115,6 +119,13 @@ The _spec.output_ makes use the variables that individual steps output to do dis
 * Source Code Repository links
 * links to Git Merge Requests that are needed etc
 * markdown text blobs
+
+__spec.output__은 개별 단계가 출력하는 변수를 사용하여 다음과 같은 유용한 정보를 표시합니다. 
+
+* 새로 생성된 컴포넌트의 링크
+* 소스 코드 저장소 링크
+* Git 병합 요청 링크
+* 마크다운 텍스트 블롭
 
 ```yaml
   output:

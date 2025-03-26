@@ -1,41 +1,39 @@
 :imagesdir: ../../assets/images
 
-== Developer Activity: Developer On-Boarding Example
+== 개발자 활동: 개발자 온보딩 예시
 
 include::../style.adoc[]
 
-Until now, you've been acting in the role of a platform engineer. Let's switch persona to that of a developer: `dev1`. 
+지금까지 여러분은 플랫폼 엔지니어 역할을 맡고 있었습니다. 이제 개발자 `dev1` 역할로 전환해 보겠습니다.
 
-Let's assume that this developer needs to create a development environment to work on a new feature - we can use a Software Template to assist with this task. A prerequisite to using this template is that the developer has a Quay account, so their code can be built into a container image and pushed to an image registry for storage and scanning. 
+이 개발자가 새로운 기능(feature)을 작업하기 위해 개발 환경을 생성해야 한다고 가정해 봅시다. 이 작업을 돕기 위해 소프트웨어 템플릿을 사용할 수 있습니다. 이 템플릿을 사용하기 위한 전제 조건은 개발자가 Quay와 같은 이미지 레지스트리의 계정을 가지고 있어야 한다는 것입니다. 그래야 코드가 컨테이너 이미지로 빌드되어 이미지 레지스트리에 푸시되고 저장 및 스캔될 수 있습니다.
 
-While OpenShift has a built-in image registry, there are various reasons we're using Quay as our image registry:
+OpenShift에도 내장된 이미지 레지스트리가 있지만, 별도로 Quay를 이미지 레지스트리로 사용하는 이유는 여러 가지가 있습니다:
 
-* Security scanning for container images via Clair.
-* Support for image signing and trust policies.
-* Vulnerability detection with detailed reports.
-* RBAC and repository/organisation permissions.
-* Better suited for multi-tenant and multi-cluster environments.
+* Clair를 통한 컨테이너 이미지에 대한 보안 스캐닝
+* 이미지 서명 및 신뢰 정책 지원
+* 취약점 감지 및 상세 보고서 제공
+* RBAC 및 리포지토리/조직 권한 관리
+* 다중 테넌트 및 다중 클러스터 환경에 더 적합
 
-
-IMPORTANT: Please make sure to log in as a *Developer* with *dev1/{common_password}* as described in the next step to avoid errors while navigating this workshop :)
+IMPORTANT: 이번 단계 실습을 진행하면서 오류를 피하려면 **dev1/{common_password}**를 사용하여 **개발자**로 로그인해야 합니다.
 
 include::../login-developer.adoc[]
 
+=== Quay에서 계정 만들기
 
-=== Create an Account in Quay
+개발자의 컨테이너 이미지를 스캔하고 배포하려면 Quay에 계정이 필요합니다.
 
-You'll need an account in Quay to push your developer's container images for scanning and deployment.
-
-. Visit the https://quay.{openshift_cluster_ingress_domain}[Quay Registry^, window="quay"] deployed in your workshop environment.
-. Click the *Create Account* link.
+. 워크숍 환경에 배포된 https://quay.{openshift_cluster_ingress_domain}[Quay Registry^, window="quay"]를 방문하세요.
+. *Create Account* 링크를 클릭하세요.
 +
 image:m3/quay-create-account-link.png[Creating a Quay Account, width="60%"]
-. Enter the following information:
+. 다음 정보를 입력하세요.
   * Username: `dev1`
   * Email: `dev1@rhdh.com`
   * Password: {common_password}
 +
 image:m3/quay-create-account.png[Creating a Quay Account]
-. Click *Create Account*.
+. *Create Account* 를 클릭하세요.
 
-You're almost ready to create an application from a Template!
+템플릿에서 애플리케이션을 만들 준비가 거의 끝났습니다!

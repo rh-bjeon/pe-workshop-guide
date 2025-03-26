@@ -1,36 +1,35 @@
 :imagesdir: ../../assets/images
 
-= Module 1: Discovery
+= 모듈 1: Discovery
 
 include::../style.adoc[]
 
+== 목표
 
-== Objectives
-
-* Discuss the challenges currently faced by developers and the need for an Internal Developer Platform 
-* Learn why a developer platform is necessary for rapid innovation
+* 개발자가 현재 직면한 과제와 내부 개발자 플랫폼(Internal Developer Platform)의 필요성에 대해 논의합니다.
+* 빠른 혁신에 개발자 플랫폼이 필요한 이유를 알아봅니다.
 
 == Hello Parasol!
 
-Parasol is an Insurance company but looking at rapidly expanding into different other verticals such as retail etc. With business booming, and their online presence increasing, the teams also grow in numbers. But the team, while being quite technically proficient, is quite siloed in their way of working especially because they are widespread and this results in difficulties in collaborating with each other.
+Parasol은 보험 회사이지만, 소매업 등 다양한 분야로 빠르게 확장하려 하고 있습니다. 비즈니스가 호황을 맞이하고 온라인 입지가 커짐에 따라 팀의 규모도 증가하고 있습니다. 
+그러나 팀은 기술적으로는 뛰어나지만, 넓게 분산되어 있어 각자 고립된 방식으로 작업하는 경향이 강하며, 이로 인해 협업에 어려움을 겪고 있습니다.
 
-With a rapidly evolving and expanding team, it is getting harder and harder for the team to keep up with 
+빠르게 변화하고 확장하는 팀에서는 다음과 같은 문제를 해결하는 것이 점점 더 어려워지고 있습니다.
 
-* knowing who is doing what
-* onboarding new team members and get them to be effective ASAP
-* identifying existing reusable artifacts - reuse please!
-* providing self-service for developers without need to be listening to a please-wait music tone
-* offering choices of features, and easy ways to hit the road running
+* 누가 무엇을 하고 있는지 파악하기
+* 새로운 팀원을 온보딩하고 최대한 빨리 업무에 적응하도록 돕기
+* 재사용할 수 있는 기존 산출물을 식별하고 적극적으로 활용하기
+* 개발자가 기다려야 하는 불편 없이 셀프 서비스 환경을 제공하기
+* 다양한 기능을 선택할 수 있도록 하고, 쉽게 작업을 시작할 수 있는 환경을 조성하기
 
-The team hears about the magic words - _Internal Developer Platform (IDP)_, and some research shows that {product_name_rhdh} would be perfect because of how customizable it is and especially the fact that it can run on on-prem to air gap sensitive content.
+팀은 _내부 개발자 플랫폼(IDP)_ 이라는 마법 같은 단어를 듣게 되었고, {product_name_rhdh}가 커스터마이징 할 수 있다는 점과 특히 온프레미스 환경에서 실행되어 민감한 콘텐츠를 격리하여 보호할 수 있다는 점에서 완벽한 선택이라는 결론을 내렸습니다.
 
 
 == Hello {product_name_rhdh}!
 
-{product_name_rhdh} streamlines development through a unified and open platform that reduces cognitive load and frustration for developers. It provides pre-architected and supported approaches that can help Parasol get their applications into production faster and more securely—without sacrificing code quality.
+{product_name_rhdh}는 통합된 개방형 플랫폼을 통해 개발자의 인지적 부담과 좌절감을 줄이며 개발 프로세스를 간소화합니다. 또한 Parasol이 코드 품질을 희생하지 않고도 애플리케이션을 더 빠르고 안전하게 프로덕션에 투입할 수 있도록 돕는 사전 설계되고 지원되는 접근 방식을 제공합니다. 
 
-{product_name_rhdh} and its associated plugins extend the popular upstream Backstage product by providing additional features such as integration with OpenShift, enterprise role-based access control (RBAC), and dynamic plugins - while including all the nice goodies that come with Backstage project itself.
-
+{product_name_rhdh} 관련 플러그인은 OpenShift 통합, 엔터프라이즈 역할 기반 액세스 제어(RBAC), 동적 플러그인과 같은 추가 기능을 제공하여 인기 있는 업스트림 Backstage 제품을 확장합니다. 물론 Backstage 프로젝트 자체가 제공하는 다양한 유용한 기능도 함께 포함됩니다.
 
 == Hello Workshop!
 
@@ -44,5 +43,17 @@ In this workshop, you will walk through in the steps of the platform engineers
 * and a touch of Security as well
 
 All of this boiling down to _how to setup Development Teams up for success in a cloud native, AI infused world_!
+
+이 워크숍에서는 플랫폼 엔지니어의 작업 과정을 따라가며 다음 내용을 학습합니다.
+
+* 내부 개발자 플랫폼(IDP)이 무엇인지 발견하기
+* TVP(최소 실행 가능 제품, Thinnest Viable Product)의 설계, 아키텍처 구성 및 롤아웃 방법
+* 테스트 드라이브를 통해 개발자로부터 피드백 받기
+* 단일 화면 인터페이스(single-pane-of-glass)에서 기존 애플리케이션 온보딩하기
+#모듈6 * 노트북에서 프로덕션까지의 워크플로우 설정하기
+#모듈7 * 보안 요소도 함께 고려하기
+
+현재 이 워크샵은 개발 중으로, 티켓 승인 과정 및 보안 요소 결합 등의 과정이 추가될 예정입니다. 
+궁극적으로, _클라우드 네이티브 및 AI가 접목된 세계에서 개발 팀을 성공적으로 운영하는 방법_ 을 배우게 됩니다!
 
 == Conclusion

@@ -1,50 +1,50 @@
 :imagesdir: ../../assets/images
 
-== Platform Engineer Activity: Update the Component Template
+== 플랫폼 엔지니어 활동: 컴포넌 템플릿 업데이트
 
 include::../style.adoc[]
 
-While the developer can add the necessary annotation to their Component, it's best to update the Template so future developers can benefit from the Argo CD integration without having to manually add the annotation.
+개발자가 자신의 컴포넌트에 필요한 주석을 직접 추가할 수도 있지만, 향후 개발자가 주석을 수동으로 추가할 필요 없이 Argo CD 통합의 혜택을 받을 수 있도록 템플릿을 업데이트하는 것이 가장 좋습니다.
 
-=== Login as Platform Engineer
+=== 플랫폼 엔지니어로 로그인
 
-IMPORTANT: Please make sure to log in as a *Platform Engineer* with `pe1/{common_password}`. If you are unsure, please refer to the below note.
+IMPORTANT: `pe1/{common_password}` 계정으로 **플랫폼 엔지니어**로 로그인했는지 확인하세요. 확실하지 않다면 아래의 참고 사항을 확인하세요.
 
-.Click to know how to login as a Platform Engineer
+.플랫폼 엔지니어로 로그인하는 방법을 알아보려면 클릭하세요.
 [%collapsible]
 ====
 include::../login-pe.adoc[]
 ====
 
-=== Update the Quarkus Service template in GitLab
+=== GitLab에서 Quarkus Service 템플릿 업데이트
 
-. Visit the https://gitlab-gitlab.{openshift_cluster_ingress_domain}/rhdh/template-quarkus-simple/-/blob/main/skeleton/catalog-info.yaml[rhdh/template-quarkus-simple/skeleton/catalog-info.yaml,  window="gitlab"] file in GitLab.
-. Select _Edit > Edit single file_.
-. Uncomment the following in the `annotations` section of the file:
+. GitLab의 https://gitlab-gitlab.{openshift_cluster_ingress_domain}/rhdh/template-quarkus-simple/-/blob/main/skeleton/catalog-info.yaml[rhdh/template-quarkus-simple/skeleton/catalog-info.yaml, window="gitlab"] 파일을 엽니다.
+. __Edit > Edit single file__을 선택합니다.
+. 파일의 `annotations` 섹션에서 다음 주석을 해제합니다.
 +
 ----
 argocd/app-selector: rht-gitops.com/${{ values.gitops_namespace }}=${{ values.owner }}-${{values.component_id}}
 ----
 +
 image:m3/gitlab-template-edit.png[Edit the Template in Argo CD]
-. Scroll down and enter a commit message `feat: Enable argocd/app-selector annotation`.
-. Use the *Commit changes* button to commit the new annotation.
+. 아래로 스크롤하여 `feat: Enable argocd/app-selector annotation` 커밋 메시지를 입력합니다.
+. *Commit changes* 버튼을 사용하여 새 주석을 적용합니다.
 
-The annotation value will be automatically generated, similar to the Argo CD label, using the values provided by developers when they use the Template.
+Argo CD 레이블블과 비슷하게, 주석 값은 개발자가 템플릿을 사용할 때 제공한 값을 사용하여 자동으로 생성됩니다.
 
-=== Refresh the Quarkus Service template on {product_name_rhdh}
+=== {product_name_rhdh}에서 Quarkus Service 템플릿 새로고침
 
-Return to your {product_name_rhdh} instance to view the https://backstage-backstage.{openshift_cluster_ingress_domain}/catalog/default/template/quarkus-web-template[quarkus-web-template^, window="rhdh"] after committing the change. Use the *Schedule entity refresh* button to pull this change from Git to {product_name_rhdh} for your Quarkus application. 
+변경 사항을 커밋한 후 {product_name_rhdh} 인스턴스로 돌아가서 https://backstage-backstage.{openshift_cluster_ingress_domain}/catalog/default/template/quarkus-web-template[quarkus-web-template^, window="rhdh"]을 확인하세요. *Schedule entity newly* 버튼을 사용하여 이 변경사항을 Git에서 {product_name_rhdh}의 Quarkus 애플리케이션으로 가져옵니다.
 
-NOTE: Manually refreshing is an optional step, since {product_name_rhdh} will check for upstream Entity changes every few minutes.
+NOTE: {product_name_rhdh}가 몇 분마다 업스트림 엔터티 변경사항을 확인하므로 수동으로 새로 고침을 하는 것은은 선택 사항입니다.
 
 image:m3/rhdh-template-refresh.png[Refresh Template Button]
 
-== Conclusion
+== 결론
 
-Congratulations! You've learned how to:
+축하합니다! 다음 방법을 배웠습니다.
 
-* Create and Import Software Templates
-* Create new Components using a Software Template
-* Use annotations to provide information to plugins
-* Force refresh Entities in the Software Catalog
+* 소프트웨어 템플릿 생성 및 가져오기
+* 소프트웨어 템플릿을 사용하여 새로운 컴포넌트 만들기
+* 주석을 사용하여 플러그인에 정보 제공
+* 소프트웨어 카탈로그의 엔터티 강제 새로고침
