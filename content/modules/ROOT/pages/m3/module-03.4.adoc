@@ -2,7 +2,7 @@
 
 == 개발자 활동: 템플릿에서 새 컴포넌트 만들기
 
-IMPORTANT: 이전 단계에서 안내한 대로 `dev1/{common_password}`를 사용하여 개발자로 로그인했는지 확인하세요.
+IMPORTANT: 이전 단계에서 안내한 대로 ``dev1/{common_password}``를 사용하여 개발자로 로그인했는지 확인하세요.
 
 include::../style.adoc[]
 
@@ -15,7 +15,7 @@ image:m3/rhdh-create.png[The {product_name_rhdh} Create UI]
 . 1단계에서는 애플리케이션 매개변수 집합을 입력하라는 메시지가 표시됩니다. 다행히도 템플릿에서 기본값이 제공되므로 **Next**를 클릭하기만 하면 됩니다. 
 . 2단계에서는 *Provide Image Registry Information* 메시지가 표시되면 
   * *Quay* 이미지 레지스트리를 선택합니다. 
-  * Quay 비밀번호 `{common_password}` 를 입력합니다.
+  * Quay 비밀번호 ``{common_password}``를 입력합니다.
   * **Next**를 클릭합니다.
 +
 NOTE: username은 현재 세션을 사용하여 템플릿에 의해 자동으로 결정됩니다.

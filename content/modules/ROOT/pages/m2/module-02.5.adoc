@@ -28,14 +28,14 @@ NOTE: 아래의 항목들을 처음 읽었을 때 이해하기 어려울 수도 
     * *Credentials*: https://console-openshift-console.{openshift_cluster_ingress_domain}/k8s/ns/keycloak/secrets/keycloak-initial-admin[OpenShift에서 확인, window="content"]
 . Red Hat build of Keycloak에서 사용자를 {product_name_rhdh}로 동기화하기 위해 {product_name_rhdh} Keycloak 플러그인을 설정정합니다.
 . Realm 세부 정보를 사용하여 `oidc` {product_name_rhdh} 인증 제공자를 설정합니다.
-. {product_name_rhdh}의 signInPage 페이지 유형으로 `oidc`를 설정합니다.
+. {product_name_rhdh}의 signInPage 페이지 유형으로 ``oidc``를 설정합니다.
 . {product_name_rhdh}에서 세션 지원(session support)을 활성화합니다.
 
 === OpenID Connect 인증 공급자 구성
 
 . https://gitlab-gitlab.{openshift_cluster_ingress_domain}/rhdh/developer-hub-config/[GitLab의 rhdh/developer-hub-config 저장소, window="gitlab"]을 방문하세요.
 . *values.yaml* 파일을 열고 **Edit > Edit single file**을 선택합니다.
-. YAML에서 `appConfig.auth` 객체를 찾습니다. 이 파일에서 `--- AUTHENTICATION ---` 을 검색하여 이 섹션을 찾을 수 있습니다.
+. YAML에서 `appConfig.auth` 객체를 찾습니다. 이 파일에서 ``--- AUTHENTICATION ---``을 검색하여 이 섹션을 찾을 수 있습니다.
 . `guest` 공급자를 포함하는 기존 `auth` 구성을 삭제합니다.
 . `oidc` 공급자와 그 아래의 `signInPage` 설정을 포함하는 전체 `auth` 구성의 주석 처리를 제거합니다.
 +
@@ -64,23 +64,23 @@ signInPage: oidc
 
 . 이것은 표준 Backstage `auth` 구성의 예시 중 하나 입니다. 이 구성이 지정하는 내용의 요약은 다음과 같습니다.
 * 세션을 활성화하고 `BACKEND_SECRET` 환경 변수를 사용하여 세션에 서명합니다. 
-* 인증의 `environment` 를 `production` 으로 설정합니다. environment는 임의의 이름을 가질 수 있습니다. 
+* 인증의 ``environment``를 ``production``으로 설정합니다. environment는 임의의 이름을 가질 수 있습니다. 
 * 다음 구성으로 OpenID Connect 공급자(`providers.oidc`)를 활성화합니다. 
-** `production` environment의 구성을 제공합니다. (이전에 정의된 `environment` 에 해당하는 값)
+** `production` environment의 구성을 제공합니다. (이전에 정의된 ``environment``에 해당하는 값)
 ** `backstage` Realm(`metadataUrl`)을 사용합니다. 
-** 환경 변수에서 `clientId` 및 `clientSecret` 을 로드합니다(사전 생성된 https://console-openshift-console.{openshift_cluster_ingress_domain}/k8s/ns/backstage/secrets/oauth-client[*oauth-client*] secret에서 로드되며 _values.yaml_ 의 `extraEnvVarsSecrets` 에 지정됨) 
+** 환경 변수에서 ``clientId`` 및 ``clientSecret``을 로드합니다(사전 생성된 https://console-openshift-console.{openshift_cluster_ingress_domain}/k8s/ns/backstage/secrets/oauth-client[*oauth-client*] secret에서 로드되며 _values.yaml_ 의 ``extraEnvVarsSecrets``에 지정됨) 
 ** 지정된 https://backstage.io/docs/auth/identity-resolver/[resolver^, window="console"]를 사용하여 모든 로그인 사용자 ID를 {product_name_rhdh}의 User 엔터티에 매핑합니다. 이러한 사용자 및 그룹은 이전 모듈에서의 작업으로 인해 이미 카탈로그에 동기화되었습니다. 
 * `signInPage` 속성은 {product_name_rhdh}에만 해당합니다. 올바른 로그인 UI가 렌더링되도록 합니다. 업스트림 Backstage에서 이를 위해서는 React 코드를 변경해야 합니다.
 
 . `feat: enable openid connect` 같은 메시지를 입력하고 변경사항을 커밋합니다 
-. https://openshift-gitops-server-openshift-gitops.{openshift_cluster_ingress_domain}/applications[OpenShift GitOps의 `backstage` Application^, window="argo"]에서 Refresh 버튼을 클릭합니다. 로그인 창이 표시되면 `admin/{openshift_gitops_password}` 로 로그인합니다.
+. https://openshift-gitops-server-openshift-gitops.{openshift_cluster_ingress_domain}/applications[OpenShift GitOps의 `backstage` Application^, window="argo"]에서 Refresh 버튼을 클릭합니다. 로그인 창이 표시되면 ``admin/{openshift_gitops_password}``로 로그인합니다.
 . 애플리케이션이 *Healthy* 상태라고 보고할 때까지 기다립니다. 
 
 === OpenID Connect 인증을 사용하여 로그인
 
-. `appConfig` 의 최신 버전이 동기화되고 롤아웃되면 https://backstage-backstage.{openshift_cluster_ingress_domain}/[{product_name_rhdh} 인스턴스^, window="rhdh"]를 방문하세요. OpenID Connect를 사용하여 로그인하라는 메시지가 표시됩니다. 
+. ``appConfig``의 최신 버전이 동기화되고 롤아웃되면 https://backstage-backstage.{openshift_cluster_ingress_domain}/[{product_name_rhdh} 인스턴스^, window="rhdh"]를 방문하세요. OpenID Connect를 사용하여 로그인하라는 메시지가 표시됩니다. 
 +
 image:m2/rhdh-oidc-login.png[OIDC Sign-In Prompt]
-. 나타나는 팝업에서 사용자 이름 `pe1` 과 비밀번호 `{common_password}` 를 사용하여 로그인합니다. 로그인 후, {product_name_rhdh}의 *Settings* 페이지를 방문하여 `pe1` 사용자로 로그인했는지 확인합니다. 
+. 나타나는 팝업에서 사용자 이름 ``pe1``과 비밀번호 ``{common_password}``를 사용하여 로그인합니다. 로그인 후, {product_name_rhdh}의 *Settings* 페이지를 방문하여 `pe1` 사용자로 로그인했는지 확인합니다. 
 + 
 image:m2/rhdh-pe1-user.png[Viewing the user details on the Settings UI in {product_name_rhdh}]

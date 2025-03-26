@@ -55,7 +55,7 @@ image:m3/rbac-block2.png[width=60%]
 +
 image:m3/rbac-block3.png[width=70%]
 .. 아래로 스크롤하여 `feat: enable RBAC` 커밋 메시지를 입력합니다. 그리고 *Commit* 버튼을 클릭합니다.
-. https://openshift-gitops-server-openshift-gitops.{openshift_cluster_ingress_domain}/applications[OpenShift GitOps의 `backstage` 애플리케이션^, window="argo"] 화면으로 이동해서서(`admin`/`{openshift_gitops_password}`를 사용하여 로그인) **Refresh**를 클릭합니다.  `Healthy` 상태가 될 때까지 기다립니다.
+. https://openshift-gitops-server-openshift-gitops.{openshift_cluster_ingress_domain}/applications[OpenShift GitOps의 `backstage` 애플리케이션^, window="argo"] 화면으로 이동해서서(``admin``/``{openshift_gitops_password}``를 사용하여 로그인) **Refresh**를 클릭합니다.  `Healthy` 상태가 될 때까지 기다립니다.
 
 == RBAC 구성 테스트
 
@@ -68,7 +68,7 @@ image:m3/rbac-block3.png[width=70%]
 ====
 * {product_name_rhdh}의 https://backstage-backstage.{openshift_cluster_ingress_domain}/settings[Settings, window="rhdh"] 화면으로 이동하여 프로필 섹션에서 로그인한 사용자의 이름을 확인합니다.
 * 플랫폼 엔지니어(`pe` 유저)로 로그인하지 않은 경우, 로그아웃을 클릭합니다.
-* `pe1/{common_password}`로 로그인합니다. 
+* ``pe1/{common_password}``로 로그인합니다. 
 +
 image:m3/pe-signout.png[width=70%]
 ====
@@ -89,13 +89,13 @@ user:default/pe1,pe1 rhdh,pe1@rhdemo.com,"Tue, 10 Dec 2024 05:25:22 GMT"
 . https://backstage-backstage.{openshift_cluster_ingress_domain}/create[*Create* 화면, window="rhdh"]으로 이동하여 *Register Existing Component* 버튼이 보이는지 확인합니다. 
 
 === 활동: 개발자
-. *pe1* 사용자에서 로그아웃하고 `dev1/{common_password}` 를 사용하여 개발자로 다시 로그인합니다. 
+. *pe1* 사용자에서 로그아웃하고 ``dev1/{common_password}``를 사용하여 개발자로 다시 로그인합니다. 
 . {product_name_rhdh} 구성에서 개발자에게 `admin` 역할이 할당되지 않았으므로 *Administration > RBAC* 메뉴를 볼 수 없습니다. 
 . https://backstage-backstage.{openshift_cluster_ingress_domain}/create[*Create* 화면, window="rhdh"]으로 이동합니다.
 . *Register Existing Component* 버튼도 보이지 않습니다. 이미 생성된 템플릿은 계속 사용할 수 있습니다. 
 +
 image:m3/developer-rbac-create.png[]
-. 위와 같은 변화는 앞서 살펴본 바와 같이 RBAC 정책이 `group:default/platformengineers` 에 대해서만 `catalog.entity.create`를 허용하도록 설정되었기 때문입니다.
+. 위와 같은 변화는 앞서 살펴본 바와 같이 RBAC 정책이 ``group:default/platformengineers``에 대해서만 ``catalog.entity.create``를 허용하도록 설정되었기 때문입니다.
 
 == 결론
 

@@ -39,11 +39,11 @@ image:m2/gitops-sources.png[GitOps Sources for the Backstage Application]
 https://gitlab-gitlab.{openshift_cluster_ingress_domain}/rhdh/developer-hub-config/-/blob/main/values.yaml[GitLab의 values.yaml 파일, window="gitlab"]의 변경 사항이 실제로 OpenShift GitOps에 의해 적용되는지 확인해 보겠습니다.
 
 . https://gitlab-gitlab.{openshift_cluster_ingress_domain}/rhdh/developer-hub-config/-/blob/main/values.yaml[values.yaml 파일, window="gitlab"]을 엽니다.
-. **Edit > Edit single file**을 선택합니다. 로그인 메시지가 표시되면 `pe1/{common_password}` 로 플랫폼 엔지니어로 로그인합니다.
-. `--- APP TITLE ---` 로 둘러싸인 YAML을 찾아 강조 표시하고 `CMD + /` 또는 `CTRL + /` 를 눌러 주석 처리를 제거합니다.
+. **Edit > Edit single file**을 선택합니다. 로그인 메시지가 표시되면 ``pe1/{common_password}``로 플랫폼 엔지니어로 로그인합니다.
+. ``--- APP TITLE ---``로 둘러싸인 YAML을 찾아 강조 표시하고 ``CMD + /`` 또는 ``CTRL + /``를 눌러 주석 처리를 제거합니다.
 +
 image:m2/gitlab-change-app-title.png[Customizing the Title]
-. 아래로 스크롤하여 `feat: change application title` 이라는 커밋 메시지를 입력합니다.
+. 아래로 스크롤하여 ``feat: change application title``이라는 커밋 메시지를 입력합니다.
 . *Commit changes* 버튼을 클릭합니다.
 
 
