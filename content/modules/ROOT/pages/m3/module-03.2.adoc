@@ -8,7 +8,7 @@ include::../style.adoc[]
 
 {product_name_rhdh} UI를 사용하여 이 템플릿을 등록하세요.
 
-. https://backstage-backstage.{openshift_cluster_ingress_domain}/[{product_name_rhdh} 인스턴스^, window="rhdh"]에 `pe1` 사용자로 로그인하고 비밀번호는 '`{common_password}`'입니다.
+. https://backstage-backstage.{openshift_cluster_ingress_domain}/[{product_name_rhdh} 인스턴스^, window="rhdh"]에 `pe1` 사용자로 로그인하고 비밀번호는 ``{common_password}``입니다.
 . 측면 메뉴에서 **Create**를 선택합니다.
 . *Register Existing Component* 버튼을 클릭합니다.
 +
