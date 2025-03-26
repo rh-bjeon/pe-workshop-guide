@@ -1,24 +1,24 @@
 :imagesdir: ../../assets/images
 
 
-== Platform Engineer Activity: Setup Software Templates to Import Existing API/Apps
+== 플랫폼 엔지니어 활동: 기존 API/앱을 가져오기 위한 소프트웨어 템플릿 설정
 
 include::../style.adoc[]
 
-The Platform Engineering team creates two Templates for importing existing applications/services, and APIs into {product_name_rhdh}. While it is possible to use the same template to import both of them, there are some key differences in the data that must be gathered. 
+플랫폼 엔지니어링 팀은 기존 애플리케이션/서비스와 API를 {product_name_rhdh}에 가져오기 위한 두 가지 템플릿을 만듭니다. 두 템플릿을 동일하게 사용할 수는 있지만, 수집해야 할 데이터에 몇 가지 중요한 차이점이 있습니다.
 
-IMPORTANT: Please make sure to log in as a *Platform Engineer* with `pe1/{common_password}`. If you are unsure, please refer to the below note.
+IMPORTANT: **플랫폼 엔지니어**로 로그인하려면 ``pe1/{common_password}``를 사용해야 합니다. 만약 잘 모르겠다면 아래의 설명을 참고하세요.
 
-.Click to know how to login as a Platform Engineer
+.플랫폼 엔지니어로 로그인하는 방법을 확인하려면 여기를 클릭하세요.
 [%collapsible]
 ====
 include::../login-pe.adoc[]
 ====
 
 
-== Register the Import Software Templates
+== 가져오기(Import) 소프트웨어 템플릿 등록
 
-=== Software Template Overview 
+=== 소프트웨어 템플릿 개요
 
 You learnt how to create a Software Template in module 3. In this section we will walk through a Template that has been pre-built for you. 
 
@@ -30,14 +30,24 @@ This template does the following:
 . Gather details of the new Software Component to be created (target location of the component, the catalog info, API Path etc)
 . Creates a Merge Request to create the new catalog-info and TechDocs file of the component
 
-=== Register the Import API Software Template
+당신은 3번째 모듈에서 소프트웨어 템플릿을 만드는 방법을 배웠습니다. 이번 섹션에서는 사전에 미리 만들어진 템플릿을 살펴보겠습니다.
 
-. Access {product_name_rhdh} (https://backstage-backstage.{openshift_cluster_ingress_domain}[click here^, window="rhdh"]). If prompted login using `pe1/{common_password}`
-. Click on the *Create* menu on the left-hand navigation. 
+https://gitlab-gitlab.{openshift_cluster_ingress_domain}/rhdh/import-existing-api-template/-/blob/main/template.yaml[여기^, window="gitlab"]를 클릭해서 여러분이 사용할 `import-existing-api` 소프트웨어 템플릿을 확인하세요.
+
+이 템플릿은 다음을 수행합니다.
+
+. API의 세부사항을 수집합니다. (GitLab 조직 이름, 레포지토리 이름)
+. 새로 생성될 소프트웨어 컴포넌트의 세부사항을 수집합니다. (컴포넌트의 대상 위치, 카탈로그 정보, API 경로 등)
+. 새 카탈로그 정보 및 TechDocs 파일을 생성하기 위해 병합 요청을 생성합니다.
+
+=== Import API 소프트웨어 템플릿 등록
+
+. {product_name_rhdh}에 액세스하세요(https://backstage-backstage.{openshift_cluster_ingress_domain}[여기를 클릭하세요^, window="rhdh"]). 메시지가 표시되면 ``pe1/{common_password}``를 사용하여 로그인하세요.
+. 왼쪽 탐색창에서 *Create* 메뉴를 클릭하세요.
 +
 image::m4/nav-create.png[]
-. Click on the *Register Existing Component* button on the top-right of the page to launch the *Register an existing component* wizard. 
-. Paste the following URL into the *Select URL* field and click on *Analyze* button. This URL points to Software Template's https://gitlab-gitlab.{openshift_cluster_ingress_domain}/rhdh/import-existing-api-template/-/blob/main/template.yaml[template.yaml, window="gitlab"] file.
+. 페이지 오른쪽 상단에 있는 *Register Existing Component* 버튼을 클릭하여 *Register Existing Component* 마법사를 시작합니다.
+. 다음 URL을 *Select URL* 필드에 붙여넣고 *Analyze* 버튼을 클릭합니다. 이 URL은 Software Template의 https://gitlab-gitlab.{openshift_cluster_ingress_domain}/rhdh/import-existing-api-template/-/blob/main/template.yaml[template.yaml, window="gitlab"] 파일을 가리킵니다.
 + 
 [source,bash,role=execute,subs="attributes"]
 ----
@@ -45,81 +55,83 @@ https://gitlab-gitlab.{openshift_cluster_ingress_domain}/rhdh/import-existing-ap
 ----
 +
 image::m4/nav-register-wizard.png[]
-. Review, and import the template by clicking on the *Import* button.
+. 템플릿을 검토하고 *Import* 버튼을 클릭하여 가져옵니다.
 +
 image::m4/nav-register-import.png[]
 
-. The *import-api-catalog* Template is successfully registered.
+. *import-api-catalog* 템플릿이 성공적으로 등록되었습니다.
 +
 image::m4/nav-access-api-template.png[]
 
-=== Register Import App Software Template
+=== Import App 소프트웨어 템플릿 등록록
 
-. Let us now register the *Import existing application* template as well.
-. Click on *Register another* button from the previous step; 
-.. If that is not accessible anymore, click *Create* (left hand nav) -> *Register Existing Component* (top right)
-. Paste the following URL:
+이제 *Import existing application* 템플릿도 등록해 보겠습니다.
+. 이전 단계에서서 *Register another* 버튼을 클릭합니다.
+.. 더 이상 접근할 수 없는 경우 *Create* (왼쪽 탐색멘ㅍ) -> *Register Existing Component* (오른쪽 상단)버튼튼을 클릭하세요.
+. 다음 URL을 붙여넣으세요.
 +
 [source,bash,role=execute,subs="attributes"]
 ----
 https://gitlab-gitlab.{openshift_cluster_ingress_domain}/rhdh/import-existing-app-template/-/blob/main/template.yaml
 ----
-. Review and import the template by clicking on the *Import* button
+. *Import* 버튼을 클릭하여 템플릿을 검토하고 가져옵니다.
 
-=== View the Imported Templates
+=== 가져온 템플릿 보기
 
-Navigate back to *Create* using the side menu. You should see both the templates for importing APIs and applications to {product_name_rhdh}.
+측면 메뉴를 사용하여 *Create*로 돌아갑니다. {product_name_rhdh}에 API와 애플리케이션을 가져오기 위한 템플릿이 모두 표시되어야 합니다. 
 
 image::m4/import-templates-list.png[]
 
 
-== Setup GitLab Entity Auto-Discovery
+== GitLab 엔티티 자동 검색 설정
 
-The new templates require a set of dynamic plugins to function detect the newly created Entities: 
+새 템플릿은 새로 생성된 엔티티를 탐지하기 위해 다음과 같은 동적 플러그인 세트를 필요로 합니다:
 
-* *roadiehq-scaffolder-backend-module-utils-dynamic*: used to manipulate the file system. In this case it's used to update commit the newly created `catalog-info.yaml` files to GitLab.
-* *backstage-plugin-catalog-backend-module-gitlab-dynamic* to enable auto-discovery of `catalog-info.yaml` files.
-* *immobiliarelabs-backstage-plugin* to interact with GitLab to create Merge Requests, Issues, Pipeline runs etc
+* **roadiehq-scaffolder-backend-module-utils-dynamic**: 파일 시스템을 조작하는 데 사용됩니다. 이 경우에는 새로 생성된 `catalog-info.yaml` 파일을 GitLab에 커밋하는 데 사용됩니다.
+* **backstage-plugin-catalog-backend-module-gitlab-dynamic**: `catalog-info.yaml` 파일의 자동 검색을 가능하게 합니다.
+* **immobiliarelabs-backstage-plugin**: GitLab과 상호작용하여 병합 요청, 이슈, 파이프라인 실행 등을 생성하는 데 사용됩니다.
 
-=== Enable the Plugins 
+=== 플러그인 활성화
 
-. You will also enable a couple of Community plugins which will help view Merge requests and Issues from GitLab
-. Visit your https://gitlab-gitlab.{openshift_cluster_ingress_domain}/rhdh/developer-hub-config/-/edit/main/values.yaml[rhdh/developer-hub-config repository on GitLab^, window="gitlab"]. If prompted, login with `pe1/{common_password}`.
-. You should already be in Edit mode of the `values.yaml` file.
-. Locate the comment `--- DYNAMIC_PLUGINS_IMPORT_COMPONENTS ---`
-. Highlight the YAML section shown in the below screenshot, and uncomment those lines. Use `CMD + /` or `CTRL + /` to do so.
+. 또한 GitLab에서 병합을 요청하고 이슈를 보기 위한 몇 가지 커뮤니티 플러그인을 활성화할 것입니다.
+. https://gitlab-gitlab.{openshift_cluster_ingress_domain}/rhdh/developer-hub-config/-/edit/main/values.yaml[GitLab의 rhdh/developer-hub-config 저장소^, window="gitlab"]로 이동합니다. 로그인하라는 메시지가 표시되면 ``pe1/{common_password}``를 사용하여 로그인하세요.
+. 이미 ``values.yaml`` 파일의 편집 모드에 있을 것입니다.
+. `--- DYNAMIC_PLUGINS_IMPORT_COMPONENTS ---` 주석을 찾습니다.
+. 아래 스크린샷에 표시된 YAML 섹션을 강조 표시하고 해당 줄의 주석 처리를 제거합니다. ``CMD + /`` 또는 ``CTRL + /``를 사용하여 주석을 해제할 수 있습니다.
 +
 image::m4/uncomment-dynamic-plugin.png[width=60%]
-. Don't commit the changes yet - you need to also enable auto-discovery.
+. 아직 변경사항을 커밋하지 마세요. 자동 검색도 활성화해야 합니다. 
 
-=== Enable Auto-Discovery
-. Locate the comment `--- AUTO_DISCOVERY_IMPORT_COMPONENTS ---` in the same `values.yaml` file.
-. Highlight the YAML as shown in the below screenshot, and uncomment those lines.
+=== 자동 검색 활성화
+. 같은 `values.yaml` 파일에서 주석 ``--- AUTO_DISCOVERY_IMPORT_COMPONENTS ---``를 찾습니다 
+. 아래 스크린샷에 표시된 대로 YAML을 강조 표시하고 해당 줄의 주석 처리를 제거합니다. 
 +
 image::m4/uncomment-auto-discovery.png[width=60%]
 +
-NOTE: This YAML snippet enables auto-discovery for all files named _all-location.yaml_ (entityFilename) where the repo name starts with the word _all-location_ (projectPattern). 
-. Scroll down and enter a commit message `feat: Enable GitLab plugin and component auto discovery`.
-. Commit the file now using the *Commit Changes* button at the bottom of the page.
+NOTE: 이 YAML 스니펫은 이름이 __all-location__(projectPattern)으로 시작하는 리포지토리에서 __all-location.yaml__(entityFilename)이라는 이름의 모든 파일에 대해 자동 검색을 활성화합니다. 
 
-. Refresh the https://openshift-gitops-server-openshift-gitops.{openshift_cluster_ingress_domain}[`backstage` Application, window="argo"] to rollout the new {product_name_rhdh} configuration - login as `admin` / `{openshift_gitops_password}`. Wait until the Application turns green and marked as Healthy. 
+. 아래로 스크롤하여 커밋 메시지 ``feat: Enable GitLab plugin and component auto discovery``를 입력합니다. 
+. 페이지 하단의 *Commit Changes* 버튼을 사용하여 현재 파일을 커밋합니다. 
 
+. https://openshift-gitops-server-openshift-gitops.{openshift_cluster_ingress_domain}[`backstage` 애플리케이션, window="argo"]의 Refresh 버튼을 눌러 새로운 {product_name_rhdh} 구성을 롤아웃합니다. `admin` / ``{openshift_gitops_password}``로 로그인합니다. 애플리케이션이 녹색으로 바뀌고 정상으로 표시될 때까지 기다립니다. 
 
-== Onboard Parasol's System and Domain
+== Parasol의 시스템과 도메인 온보딩
 
 In a previous chapter you learnt how https://backstage.io/docs/features/software-catalog/system-model#system[System,window="content"] and https://backstage.io/docs/features/software-catalog/system-model/#domain[Domain,window="content"] Entities help organize and provide a hierarchy of Components in {product_name_rhdh}. In this section you will setup Parasol's System and Domain.
 
-. From {product_name_rhdh}, navigate to Create menu; choose *Register Existing Component* button
-. Paste the below URL and click on *Analyze*
+이전 챕터에서 https://backstage.io/docs/features/software-catalog/system-model#system[System,window="content"] 및 https://backstage.io/docs/features/software-catalog/system-model/#domain[Domain,window="content"] 엔터티가 {product_name_rhdh}의 컴포넌트를 조직하고 계층을 제공하는 방법에 대해 배웠습니다. 이 섹션에서는 Parasol의 시스템 및 도메인을 설정합니다. 
+
+. {product_name_rhdh}에서 Create 메뉴로 이동합니다. *Register Existing Component* 버튼을 선택합니다. 
+. 아래 URL을 붙여넣고 **Analyze**를 클릭합니다.
 +
 [source,bash,role=execute,subs="attributes"]
 ----
 https://gitlab-gitlab.{openshift_cluster_ingress_domain}/rhdh/rhdh-entities/-/blob/main/locations.yaml
 ----
-. Click *Import* in the Review section.
-. The Systems and Domain are setup. 
+. Review 섹션에서 **Import**를 클릭합니다.
+. 시스템과 도메인이 설정되었습니다.  
 
 [NOTE]
 ====
-Systems are the basic level of encapsulation for related entities. Domains are useful to group a collection of Systems that share terminology, domain models, business purpose etc.
+시스템은 관련 엔터티를 위한 기본적인 캡슐화 수준입니다. 도메인은 용어, 도메인 모델, 비즈니스 목적 등을 공유하는 시스템들의 집합을 그룹화하는 데 유용합니다.
 ====

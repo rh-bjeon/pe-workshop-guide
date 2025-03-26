@@ -1,20 +1,20 @@
 :imagesdir: ../../assets/images
 
-= Module 4: Accelerate Developer Inner-Loop
+= 모듈 4: 개발자 내부 루프 가속화
 
 include::../style.adoc[]
 
-== Overview
+== 개요
 
-Organizations need to provide a pathway for teams to import their existing services, APIs and resources to {product_name_rhdh}. This module focuses on an opinionated way to onboard existing projects and applications so that the developer teams can discover them through the internal developer portal. 
+조직은 팀들이 기존 서비스, API 및 리소스를 {product_name_rhdh}로 가져올 수 있는 경로를 제공해야 합니다. 이 모듈은 기존 프로젝트와 애플리케이션을 온보딩하는 특정 방식(opinionated)에 집중하여 개발팀들이 내부 개발자 포털을 통해 이를 발견할 수 있도록 합니다.
 
-Platform Engineering teams can create Software Templates that enable teams to import their apps into {product_name_rhdh}. The Softwares Template can gather details about the component's repository, documentation, dependencies, CI/CD, and various other details which allows development teams to accelerate their inner-loop of developing the assigned features and tasks.
+플랫폼 엔지니어링 팀은 팀들이 자신의 애플리케이션을 {product_name_rhdh}에 가져올 수 있도록 하는 소프트웨어 템플릿을 만들 수 있습니다. 소프트웨어 템플릿은 구성 요소의 리포지토리, 문서, 의존성, CI/CD 및 다양한 다른 세부 정보를 수집하여 개발팀들이 할당된 기능과 작업을 개발하는 내부 루프를 가속화할 수 있도록 합니다.
 
-== Module Objectives
+== 모듈 목표
 
-* Platform Engineers create Software Templates and integrations that support importing existing software components from Git.
-* Developers use these Software Templates to import their existing software components and APIs. 
-* Developer is assigned the task of enhancing an existing application, and creates a Git feature branch.
-* Developer uses Software Templates to setup an _Ephemeral Development_ environment based on the feature branch.
-* Developer can rapidly develop and view actions performed right from {product_name_rhdh} thereby reducing cognitive load.
-* Once code is ready, the Developer issues a PR from the feature branch to the upstream project repository.
+* 플랫폼 엔지니어는 Git에서 기존 소프트웨어 구성요소를 가져오는 것을 지원하는 소프트웨어 템플릿과 통합을 만듭니다.
+* 개발자는 이러한 소프트웨어 템플릿을 사용하여 기존 소프트웨어 구성 요소와 API를 가져옵니다.
+* 개발자는 기존 애플리케이션을 향상시키는 작업을 맡고, Git 기능 분기(feature branch)를 생성합니다.
+* 개발자는 기능 분기를 기반으로 __일시적인 개발 환경__을 설정하기 위해 소프트웨어 템플릿을 사용합니다.
+* 개발자는 {product_name_rhdh}에서 수행된 작업을 빠르게 개발하고 볼 수 있어 인지 부하를 줄입니다.
+* 코드가 준비되면 개발자는 기능 분기에서 업스트림 프로젝트 리포지토리로 PR을 발행합니다.
