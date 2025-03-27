@@ -1,23 +1,23 @@
 :imagesdir: ../../assets/images
 
 
-== Platform Engineer Activity: Setup an Ephemeral Dev Environment on OpenShift
+== 플랫폼 엔지니어 활동: OpenShift에서 임시 개발 환경 설정
 
 include::../style.adoc[]
 
-When developers are assigned a JIRA task or feature to enhance an application, they start by creating a *feature branch* on Git. They continue working on this branch until their changes are ready to be merged into the main branch. Providing an _ephemeral development environment_ for these developers enables a continuous inner loop, enhancing productivity and accelerating development.
+개발자가 애플리케이션을 향상하기 위한 JIRA 작업이나 기능을 할당받으면, 먼저 Git에서 **기능 브랜치(feature branch)**를 생성합니다. 그런 다음, 변경 사항이 메인 브랜치에 병합될 준비가 될 때까지 해당 브랜치에서 작업을 진행합니다. 이러한 개발자들에게 __임시 개발 환경(ephemeral development environment)__을 제공하면 지속적인 작업 루프를 가능하게 하여 생산성을 높이고 개발 속도를 가속화할 수 있습니다.
 
-The Platform Engineer creates a new Software Template to set up an ephemeral development environment for Developers working on the `parasol-store` application. This template performs several tasks:
+플랫폼 엔지니어는 `parasol-store` 애플리케이션에서 작업하는 개발자를 위한 임시 개발환경을 설정하기 위해 새로운 소프트웨어 템플릿을 만듭니다. 이 템플릿은 다음과 같은 작업을 수행합니다.
 
-* Creates a dedicated namespace within OpenShift for the developer
-* Connects the ephemeral development environment to the *dev* DB instance running on OpenShift
-* Sets up development pipelines to build and deploy the developer's changes in the environment
-* Generates GitOps/Argo CD manifests to manage CI/CD for the developer's environment
+* OpenShift에서 개발자를 위한 전용 네임스페이스를 생성합니다.
+* OpenShift에서 실행 중인 **dev** DB 인스턴스에 임시 개발환경을 연결합니다.
+* 개발자가 변경한 내용을 환경에 빌드하고 배포할 수 있는 개발 파이프라인을 설정합니다.
+* 개발자 환경의 CI/CD를 관리하기 위한 GitOps/Argo CD 매니페스트를 생성합니다.
 
 With this approach, the Platform Engineers enable developers to just focus on coding. The templates simplify the set up of these ephemeral dev environments in a self-service manner. This allows the developers to create them repeatedly and easily, thereby rapidly increasing developer productivity.
 
 
-IMPORTANT: Please make sure to log in as a *Platform Engineer* with `pe1/{common_password}`. If you are unsure, please refer to the below note.
+IMPORTANT: Please make sure to log in as a **Platform Engineer** with `pe1/{common_password}`. If you are unsure, please refer to the below note.
 
 .Click to know how to login as a Platform Engineer
 [%collapsible]
@@ -29,14 +29,14 @@ include::../login-pe.adoc[]
 == Create parasol-store Dev Template
 
 . Access your https://backstage-backstage.{openshift_cluster_ingress_domain}/[{product_name_rhdh} instance^, window="rhdh"]. If prompted login using `pe1/{common_password}`
-. Click on the *Create* menu on the left-hand navigation, and choose *Register Existing Component*. 
-. Create a Software Template by pasting this template URL into the *URL* textbox 
+. Click on the **Create** menu on the left-hand navigation, and choose **Register Existing Component**. 
+. Create a Software Template by pasting this template URL into the **URL** textbox 
 +
 [source,bash,role=execute,subs="attributes"]
 ----
 https://gitlab-gitlab.{openshift_cluster_ingress_domain}/rhdh/parasol-store-dev-template/-/blob/main/template.yaml
 ----
-. Click on the *Analyze* button followed by clicking the *Import* button to import the template.
+. Click on the **Analyze** button followed by clicking the **Import** button to import the template.
 . The Template will start appearing in the Create side menu.
 +
 image::m4/parasol-store-dev-template-create.png[]
